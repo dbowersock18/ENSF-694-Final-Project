@@ -27,15 +27,16 @@ void Building::add_edge(Edge edge){
 
 void Building::print_information(){
     cout << "Information for building is: " << this -> building_id << endl;
-    cout << "It has edges: " << endl;
+    cout << "It has edges: ";
     if ((int) this -> edges.size() != 0 ){
         for (int i = 0; i < (int) this -> edges.size(); i++)
-        cout << "To: " << this -> edges[i].connectedBuilding.building_id
-        << " With weight: " << this -> edges[i].weight << endl;
+        cout << " to: " << this -> edges[i].connectedBuilding.building_id
+        << " with weight: " << this -> edges[i].weight << endl;
     }
     else {
         cout << "0" << endl;
     }
+    cout << endl;
 }
 
 // Default Constructor for Edge
@@ -43,13 +44,11 @@ Edge::Edge() {
     Building defaultBuilding;
     this -> connectedBuilding = defaultBuilding;
     this -> weight = 0;
-    //TODO: TEST CASE
 }
 
 // Detailed Constructor for Edge 
 Edge::Edge (Building connectedBuilding, int weight){
     this -> connectedBuilding = connectedBuilding;
     this -> weight = weight;
-    //TODO: TEST CASE
 }
 
