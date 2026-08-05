@@ -9,8 +9,15 @@ int main(void) {
     // TODO: CREATE ALL THE CLASSES AND PUT IN A TEST STATEMENT. MAKE SURE THIS MAIN ENTRY POINT CONNECTS TO ALL CLASSES
     Room room;
     room.print_information();
-    Building building; 
+
+    // TODO: CREATEA ALL BUILDINGS
+    Building building("gym");
+    Building building2("science_A");
+    Edge edge(building2, 5);
+    // TODO: ADD ALL EDGES
+    building.add_edge(edge);
     building.print_information();
+    // TODO: CALCULATE PATH OF LEAST TRAVEL
     Campus campus;
     campus.print_information();
     // IDEA: SAVE INFORMATION IN EXCEL AS EACH OBJECT CONNECTS TO ANOTHER OBJECT WITH WALKING TIME
