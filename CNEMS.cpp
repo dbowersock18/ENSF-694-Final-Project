@@ -38,7 +38,8 @@ int main(void) {
     mfh.add_edge(Edge(engBlock,2));
     studentU.add_edge(Edge(residence,5));
     parkade.add_edge(Edge(ict,7));
-
+    residence.add_edge(Edge(studentU,5));
+    // Print all information as a test
     gym.print_information();
     scienceA.print_information();
     engBlock.print_information();
@@ -48,8 +49,18 @@ int main(void) {
     parkade.print_information();
     studentU.print_information();
     residence.print_information();
-    // TODO: CALCULATE PATH OF LEAST TRAVEL
+    // Campus
     Campus campus;
+    // Add buildings to campus
+    campus.campusBuildings.push_back(gym);
+    campus.campusBuildings.push_back(scienceA);
+    campus.campusBuildings.push_back(engBlock);
+    campus.campusBuildings.push_back(ict);
+    campus.campusBuildings.push_back(mfh);
+    campus.campusBuildings.push_back(studentU);
+    campus.campusBuildings.push_back(residence);
+    campus.campusBuildings.push_back(parkade);
+    campus.campusBuildings.push_back(library);
     campus.print_information();
     // IDEA: SAVE INFORMATION IN EXCEL AS EACH OBJECT CONNECTS TO ANOTHER OBJECT WITH WALKING TIME
     // BETTER IDEA: WAIT UNTIL HE COVERS SOME OF THE NODE ALGORITHMS IN CLASS FIRST

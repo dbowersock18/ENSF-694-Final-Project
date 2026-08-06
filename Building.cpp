@@ -25,6 +25,10 @@ void Building::add_edge(Edge edge){
     this -> edges.push_back(edge);
 }
 
+string Building::get_building_id(){
+    return this -> building_id;
+}
+
 void Building::print_information(){
     cout << "Information for building is: " << this -> building_id << endl;
     cout << "It has edges: ";
