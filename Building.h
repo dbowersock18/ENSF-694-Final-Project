@@ -13,9 +13,10 @@ struct Edge;
 class Building {
 private:
     string building_id; // ID of Building 
-    vector<Edge> edges; // Stored Vector of pathways
 public:
-    int distance; // Used in dijstrak's algorithm
+    vector<Edge> edges; // Stored Vector of pathways
+    double distance; // Used in dijstrak's algorithm
+    Building* prevBuilding; // Used in dijstrak's algorithm
     Building(); // Default Constructor
     Building(string building_id); // Overloaded Constructor
     Building(string building_id, Edge edge); // Overloaded Constructor
@@ -25,10 +26,10 @@ public:
 };
 
 struct Edge {
-    Building connectedBuilding;
+    Building* connectedBuilding;
     int weight; // minutes to connectedBuilding
     Edge(); // default constructor
-    Edge(Building connectedBuilding, int weight); //overloaded constructor
+    Edge(Building* connectedBuilding, int weight); //overloaded constructor
 };
 
 //------------------------------ Priority Queue ---------------------------

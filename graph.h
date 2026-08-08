@@ -13,5 +13,6 @@ public:
     Graph(); // Default Construcotr
     Graph(Campus*); // Overloaded Constructor, given Campus Object
     void dijkstra(string); // Calculuation of shortest path. Takes a start String by Building ID
-    void printGraph();
+    void printGraph(); // Prints the Graph Calculation
+    void printPath(Building*); // Taken from Assignment
 };

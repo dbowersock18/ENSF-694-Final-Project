@@ -1,18 +1,21 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <cmath>
 using namespace std;
 #include "Building.h"
 
 // Default Constructor
 Building::Building(){
     this -> building_id = "Building - Default ID";
+    this -> prevBuilding = nullptr;
     // edge property is not dealt with (yet?)
 }
 
 // Overloaded Constructor w/o edge
 Building::Building(string building_id){
     this -> building_id = building_id;
+    this -> distance = infinity();
 }
 
 // Overloaded Constructor for Building with one Edge
@@ -34,7 +37,7 @@ void Building::print_information(){
     cout << "It has edges: ";
     if ((int) this -> edges.size() != 0 ){
         for (int i = 0; i < (int) this -> edges.size(); i++)
-        cout << " to: " << this -> edges[i].connectedBuilding.building_id
+        cout << " to: " << this -> edges[i].connectedBuilding -> building_id
         << " with weight: " << this -> edges[i].weight << endl;
     }
     else {
@@ -46,12 +49,12 @@ void Building::print_information(){
 // Default Constructor for Edge
 Edge::Edge() {
     Building defaultBuilding;
-    this -> connectedBuilding = defaultBuilding;
+    this -> connectedBuilding = &defaultBuilding;
     this -> weight = 0;
 }
 
 // Detailed Constructor for Edge 
-Edge::Edge (Building connectedBuilding, int weight){
+Edge::Edge (Building* connectedBuilding, int weight){
     this -> connectedBuilding = connectedBuilding;
     this -> weight = weight;
 }

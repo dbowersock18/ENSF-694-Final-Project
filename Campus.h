@@ -12,7 +12,7 @@ private:
     string campus_id;
 public:
     // Collection of building objects
-    vector<Building> campusBuildings;
+    vector<Building*> campusBuildings;
     Campus(); // Default constructor
     void print_information(); // TESTING PURPOSES PRINT INFORMATION
 };
