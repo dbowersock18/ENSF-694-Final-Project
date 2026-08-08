@@ -3,14 +3,16 @@ using namespace std;
 #include "Room.h"
 #include "Building.h"
 #include "Campus.h"
+#include "Graph.h"
+
+// TODO LIST: 
+// METHOD THAT INSTANTIATES ALL OBJECTS (4 METHODS, ONE FOR EACH MAYBE)
 
 int main(void) {
-    cout << "test" << endl;
-    // TODO: CREATE ALL THE CLASSES AND PUT IN A TEST STATEMENT. MAKE SURE THIS MAIN ENTRY POINT CONNECTS TO ALL CLASSES
+    // Creates room object
     Room room;
     room.print_information();
-
-    // TODO: CREATEA ALL BUILDINGS
+    // Creates all building objects
     Building gym("Gym");
     Building scienceA("Science_A");
     Building engBlock("ENG Block");
@@ -20,8 +22,7 @@ int main(void) {
     Building studentU("Student U");
     Building parkade("Parkade");
     Building residence("Residence");
-     // TODO: ADD ALL EDGES
-     // TODO: POSSIBLE OPTZ, SOMETIMES, DECLARING EDGES TWICE. BIT OF A MEMORY USAGE
+     // Adds all Edges to each building Object
     gym.add_edge(Edge(scienceA, 5));
     scienceA.add_edge(Edge(engBlock,2));
     scienceA.add_edge(Edge(library,3));
@@ -37,9 +38,11 @@ int main(void) {
     ict.add_edge(Edge(studentU,3));
     mfh.add_edge(Edge(engBlock,2));
     studentU.add_edge(Edge(residence,5));
+    studentU.add_edge(Edge(ict,3));
     parkade.add_edge(Edge(ict,7));
     residence.add_edge(Edge(studentU,5));
     // Print all information as a test
+    cout << "----" << endl << "Buliding information" << endl << endl;
     gym.print_information();
     scienceA.print_information();
     engBlock.print_information();
@@ -49,6 +52,7 @@ int main(void) {
     parkade.print_information();
     studentU.print_information();
     residence.print_information();
+    cout << "----" << endl << endl;
     // Campus
     Campus campus;
     // Add buildings to campus
@@ -61,8 +65,10 @@ int main(void) {
     campus.campusBuildings.push_back(residence);
     campus.campusBuildings.push_back(parkade);
     campus.campusBuildings.push_back(library);
-    campus.print_information();
-    // IDEA: SAVE INFORMATION IN EXCEL AS EACH OBJECT CONNECTS TO ANOTHER OBJECT WITH WALKING TIME
-    // BETTER IDEA: WAIT UNTIL HE COVERS SOME OF THE NODE ALGORITHMS IN CLASS FIRST
-    // IN TH MEANTIME, FINISH IMPLEMENTING THE CLASS COPIES?
+    cout << endl;
+    
+    // dijkstra's algorithm to find shortest path
+    Graph graph(&campus);
+    graph.printGraph();
+    graph.dijkstra("Gym"); // Hard coding start. Get user input later.
 }

@@ -1,3 +1,6 @@
+#ifndef CAMPUS_H
+#define CAMPUS_H
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -8,8 +11,10 @@ class Campus {
 private:
     string campus_id;
 public:
-    // Collection of buildings
+    // Collection of building objects
     vector<Building> campusBuildings;
-    Campus();
-    void print_information();
+    Campus(); // Default constructor
+    void print_information(); // TESTING PURPOSES PRINT INFORMATION
 };
+
+#endif // CAMPUS_H
