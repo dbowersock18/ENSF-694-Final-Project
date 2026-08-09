@@ -47,17 +47,31 @@ Graph::Graph(Campus* campus){
     this -> campus = campus;
 }
 
-void Graph::dijkstra(string start){
+void Graph::setStartEnd(Building* start, Building* end){
+    this -> start = start;
+    this -> end = end;
+}
+
+Building* Graph::getStart(){
+    return this -> start;
+}
+
+Building* Graph::getEnd(){
+    return this -> end; 
+}
+
+void Graph::dijkstra(){
     PriorityQueue q; // Queue object
     vector<string> visited; // list of buildings, or nodes, that have been visited
-    Building* startB; // initialization variable for method
-    // Search through Campus buildings for starting Building
-    for (int i = 0; i < (int) campus->campusBuildings.size(); i++){
-        if(campus -> campusBuildings[i] -> get_building_id() == start){
-            startB = (campus -> campusBuildings[i]);
-            break;
-        }
-    }
+    Building* startB = this -> start; // initialization variable for method
+    // // Search through Campus buildings for starting Building.
+    // // TODO: this is no longer needed due to change in code. Leave alone until 100% sure it can be deleted.
+    // for (int i = 0; i < (int) campus->campusBuildings.size(); i++){
+    //     if(campus -> campusBuildings[i] -> get_building_id() == start){
+    //         startB = (campus -> campusBuildings[i]);
+    //         break;
+    //     }
+    // }
     q.enqueue(startB);
     startB -> distance = 0;
     while (!q.isEmpty()){
@@ -85,9 +99,11 @@ void Graph::dijkstra(string start){
 
 void Graph::printGraph(){
     cout << "The algorithm produced the following collective stats: " << endl;
+    cout << "The starting location is: " << this -> start ->  get_building_id() << endl;
     for (int i = 0; i < (int) campus->campusBuildings.size(); i++){
-        cout << "Campus Building: " << campus -> campusBuildings[i] -> get_building_id() <<
-        " takes " << campus -> campusBuildings[i] -> distance <<" minutes and has previous Path of: ... ";
+        if (campus -> campusBuildings[i] == this -> start) continue;
+        cout << "   getting to " << campus -> campusBuildings[i] -> get_building_id() <<
+        " takes " << campus -> campusBuildings[i] -> distance <<" minutes and you must navigate via: ... ";
         printPath((campus -> campusBuildings[i]));
         cout << endl;
     }
@@ -111,7 +127,6 @@ void Graph::read_input_file(const string& filename){
         cerr << "Could not open file: " << filename << endl;
         exit(1);
     }
-
     string a, b;
     int time;
     // int count = 0;
@@ -155,6 +170,14 @@ void Graph::read_input_file(const string& filename){
         buildingB -> add_edge(Edge(buildingA, time));
     }
     cout << "Finished reading from file" << endl;
-    cout << endl;
     infile.close();
+}
+
+void Graph::reset(){
+    this -> start = nullptr; 
+    this -> end = nullptr;
+    for (int i = 0; i < (int) campus->campusBuildings.size(); i++) {
+        campus -> campusBuildings[i]->distance = infinity();
+        campus -> campusBuildings[i]->prevBuilding = nullptr;
+    }
 }
