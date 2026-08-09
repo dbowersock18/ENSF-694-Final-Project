@@ -14,7 +14,8 @@ public:
     // Collection of building objects
     vector<Building*> campusBuildings;
     Campus(); // Default constructor
-    void print_information(); // TESTING PURPOSES PRINT INFORMATION
+    void print_information_campus(); // TESTING PURPOSES PRINT INFORMATION
+    void print_information_buildings(); // TESTING PURPOSES
 };
 
 #endif // CAMPUS_H

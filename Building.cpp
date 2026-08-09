@@ -33,8 +33,8 @@ string Building::get_building_id(){
 }
 
 void Building::print_information(){
-    cout << "Information for building is: " << this -> building_id << endl;
-    cout << "It has edges: ";
+    cout << "Information for building: " << this -> building_id << endl;
+    cout << "It has edges: " << endl;
     if ((int) this -> edges.size() != 0 ){
         for (int i = 0; i < (int) this -> edges.size(); i++)
         cout << " to: " << this -> edges[i].connectedBuilding -> building_id
@@ -43,7 +43,6 @@ void Building::print_information(){
     else {
         cout << "0" << endl;
     }
-    cout << endl;
 }
 
 // Default Constructor for Edge

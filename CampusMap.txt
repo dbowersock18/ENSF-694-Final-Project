@@ -1,0 +1,9 @@
+gym scienceA 5
+scienceA engBlock 2
+scienceA library 3
+engBlock mfh 2
+engBlock ict 6
+library ict 4
+ict studentU 3
+studentU residence 5
+ict parkade 7
