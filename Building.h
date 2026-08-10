@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <tuple>
+#include "Room.h"
 using namespace std;
 
 // Struct data structure to represent the different
@@ -12,7 +14,10 @@ struct Edge;
 
 class Building {
 private:
-    string building_id; // ID of Building 
+    string building_id; // ID of Building TODO: this is used, almost excusively, throughout the code. perhaps edit?
+    string name; // name of building.
+    tuple <double, double> lat_long; // coordinate of room
+    vector <Room> rooms; // list of rooms for object
 public:
     vector<Edge> edges; // Stored Vector of pathways
     double distance; // Used in dijstrak's algorithm

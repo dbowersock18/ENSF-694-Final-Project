@@ -10,6 +10,8 @@ using namespace std;
 class Campus {
 private:
     string campus_id; // unique campus I 
+    // NOTE! The pathways, are stored under each building object NOT the campus object
+    // this is in contradiction to the project guidelines reccommendations but it states, after all, just a recommendation
 public:
     vector<Building*> campusBuildings;     // Collection of building objects
     Campus(); // Default constructor
