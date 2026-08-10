@@ -14,6 +14,14 @@ void interactWithUser(Campus*, Graph*); // Method that serves as the Client Inte
 int obtainUserInput(); // Obtains a numerical user input
 
 int main(void) {
+
+    // TEST BLOCK ROOM
+    Room room("ict_204", 100, "classroom");
+    room.addBooking(2026, 8, 10, 4, 3);
+    cout << "Day of booking: "<<room.bookings[0].day;
+    // END OF TEST BLOCK
+
+    // THE BELOW CODE IS FUNCTIONAL ... ONLY COMMENTING OUT TO WORK ON SECTION 2.3
     // file housing campus data
     const string fileName= "CampusMap.txt";
     // create objects
@@ -24,6 +32,7 @@ int main(void) {
     graph.read_input_file(fileName);
     cout << endl;
     interactWithUser(&campus, &graph);
+    // END OF COMMENT SECTION
 }
 
 /*
