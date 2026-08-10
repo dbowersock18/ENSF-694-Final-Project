@@ -51,13 +51,28 @@ void Graph::setStartEnd(Building* start, Building* end){
     this -> start = start;
     this -> end = end;
 }
-
 Building* Graph::getStart(){
     return this -> start;
 }
-
 Building* Graph::getEnd(){
     return this -> end; 
+}
+void Graph::setHistorical(){
+    this -> startHistorical.push_back(this -> start);
+    this -> endHistorical.push_back(this -> end);
+}
+Building* Graph::getStartHistorical(){
+    startHistorical.pop_back();
+    Building* returnValue = startHistorical.back();
+    return returnValue;
+}
+Building* Graph::getEndHistorical(){
+    endHistorical.pop_back();
+    Building* returnValue = endHistorical.back();
+    return returnValue;
+}
+int Graph::sizeOfHistorical(){
+    return startHistorical.size();
 }
 
 void Graph::dijkstra(){
@@ -129,11 +144,7 @@ void Graph::read_input_file(const string& filename){
     }
     string a, b;
     int time;
-    // int count = 0;
     while (infile >> a >> b >> time) {
-        // cout << count << endl; 
-        // count++;
-        // verify bulidings don't already exist in data
         bool a_exists = false;
         bool b_exists = false;
         int a_index = -1;
