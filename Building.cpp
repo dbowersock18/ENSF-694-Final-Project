@@ -24,14 +24,23 @@ Building::Building(string building_id, Edge edge){
     this -> edges.push_back(edge);
 }
 
+/*
+ * REQUIRES: a valid Edge Object
+ * PROMISES: to add the Edge object to the vector of edges, stored inside the building object
+ * this represents the 'pathways' from the building to all other buildings specified 
+ */
 void Building::add_edge(Edge edge){
     this -> edges.push_back(edge);
 }
 
+// Getter Method for building ID
 string Building::get_building_id(){
     return this -> building_id;
 }
 
+/*
+ *  PROMISES: To print out all the information relevant to the building object 
+ */
 void Building::print_information(){
     cout << "Information for building: " << this -> building_id << endl;
     cout << "It has edges: " << endl;

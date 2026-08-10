@@ -32,8 +32,11 @@ struct Edge {
     Edge(Building* connectedBuilding, int weight); //overloaded constructor
 };
 
+
 //------------------------------ Priority Queue ---------------------------
 // Taken from the last assignment, including the methods, but tailored for this assignment and code
+// functions as a queue object, to be used in dikjstra's algorithm
+// at the moment (to be fixed) the methods are implemented in graph.cpp and this declaration is housed in building.h
 class PriorityQueue {
 public:
     PriorityQueue();

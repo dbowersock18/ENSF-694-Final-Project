@@ -9,13 +9,12 @@ using namespace std;
 
 class Campus {
 private:
-    string campus_id;
+    string campus_id; // unique campus I 
 public:
-    // Collection of building objects
-    vector<Building*> campusBuildings;
+    vector<Building*> campusBuildings;     // Collection of building objects
     Campus(); // Default constructor
-    void print_information_campus(); // TESTING PURPOSES PRINT INFORMATION
-    void print_information_buildings(); // TESTING PURPOSES
+    void print_information_campus(); // Prints information relevant to campus
+    void print_information_buildings(); // Prints information relevant to the buildings within the campus
 };
 
 #endif // CAMPUS_H
