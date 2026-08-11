@@ -1,4 +1,7 @@
 #include <iostream> 
+#include <fstream>
+#include <string>
+#include <iomanip>
 using namespace std;
 #include "Room.h"
 #include "Building.h"
@@ -12,27 +15,41 @@ using namespace std;
 
 void interactWithUser(Campus*, Graph*); // Method that serves as the Client Interface (instad of another class)
 int obtainUserInput(); // Obtains a numerical user input
+void importBookings(); // Method to obtain a list of bookings from a text file
+void importBuildingInformation(Campus*, const string&); // Method ot obtain building information from a text file
 
 int main(void) {
 
     // TEST BLOCK ROOM
-    Room room("ict_204", 100, "classroom");
-    room.addBooking(2026, 8, 10, 4, 3);
-    cout << "Day of booking: "<<room.bookings[0].day;
-    // END OF TEST BLOCK
-
-    // THE BELOW CODE IS FUNCTIONAL ... ONLY COMMENTING OUT TO WORK ON SECTION 2.3
     // file housing campus data
-    const string fileName= "CampusMap.txt";
+    const string campusMap= "CampusMap.txt";
     // create objects
     Campus campus;
     Graph graph(&campus);
     // run program and display information
     cout << endl;
-    graph.read_input_file(fileName);
+    graph.read_input_file(campusMap);
     cout << endl;
-    interactWithUser(&campus, &graph);
-    // END OF COMMENT SECTION
+    Room room("ict_204", 100, "classroom");
+    room.addBooking(2026, 8, 10, 6.5, 30);
+    room.addBooking(2026, 8, 11, 7.75, 90);
+    room.displayInformationAllBookings();
+    const string buildingInformation = "buildingInformation.txt";
+    importBuildingInformation(&campus, buildingInformation);
+    // END OF TEST BLOCK
+
+//     // THE BELOW CODE IS FUNCTIONAL ... ONLY COMMENTING OUT TO WORK ON SECTION 2.3
+//     // file housing campus data
+//     const string fileName= "CampusMap.txt";
+//     // create objects
+//     Campus campus;
+//     Graph graph(&campus);
+//     // run program and display information
+//     cout << endl;
+//     graph.read_input_file(fileName);
+//     cout << endl;
+//     interactWithUser(&campus, &graph);
+//     // END OF COMMENT SECTION
 }
 
 /*
@@ -178,6 +195,20 @@ void interactWithUser(Campus* campus, Graph* graph){
     cout << "End point of user interaction" << endl;
 }
 
-
+void importBuildingInformation(Campus* campus, const string& filename){
+    // TODO: POPULATE
+    cout<< "Reading input file " << filename << endl;
+    // // Validates the file can be accessed
+    // ifstream infile(filename);
+    // if (!infile) {
+    //     cerr << "Could not open file: " << filename << endl;
+    //     exit(1);
+    // }
+    // string a, b;
+    // int time;
+    // // Interprets and populates the campus object with buildings (a and b) and the weight
+    // // of each path (time)
+    // while (infile >> a >> b >> time) {
+}
 
 

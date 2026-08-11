@@ -21,6 +21,7 @@ public:
     void print_information(); // Prints infoormation related to the room
     void addBooking(int, int, int, double, double); // Add a booking to the building
     void removeBooking(); // Remove a booking from the building
+    void displayInformationAllBookings();  // display information related to all bookings
     vector<Booking>* bookingList(); // returns a pointer to the vector containing ALL the bookings
     vector<Booking> bookingListFiltered(int, int, int, double, double); // returns a new Vector containing all the filtered Bookings.
         // TODO: this might require a copy opertaor function in the booking class to complete
@@ -38,6 +39,8 @@ public:
     // ~ Booking(); // deconstructor
     Booking(); // default contructor
     Booking(int, int, int, double, double); // Overloaded constructor to set up a booking object with all required properties
+    void displayInformationBooking(); // displays information related to a specific booking 
+    string convertFractionToTime(); // converts the hour property, into a digestible format
 };
 
 #endif // ROOM_H

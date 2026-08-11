@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <cmath>
 using namespace std;
 #include "Room.h"
 
@@ -28,8 +29,20 @@ void Room::print_information(){
     cout << endl;
 }
 
+string Room::get_room_id(){
+    return this -> room_id;
+}
+
 void Room::addBooking(int year, int month, int day, double hour, double duration){
+    // TODO: ENSURE THERE IS NO COLLISIONS WITH ADDING A BOOKING
     bookings.push_back(Booking(year, month, day, hour, duration));
+}
+
+void Room::displayInformationAllBookings(){
+    cout << "For room " << this->get_room_id() << " the following books are as shown: " << endl;
+    for (int i = 0; i < (int) this->bookings.size(); i++ ){
+        this->bookings[i].displayInformationBooking();
+    }
 }
 
 // Default constructor Booking object
@@ -44,4 +57,26 @@ Booking::Booking(int year, int month, int day, double hour, double duration){
     this -> day = day;
     this -> hour = hour; 
     this -> duration = duration;
+}
+
+/*
+* PROMISES: to return information related to a specific booking 
+*/
+void Booking::displayInformationBooking(){
+    cout << "   a booking occurs " <<  this -> year << "/" << this -> month << "/" << this -> day
+    << " at " << this -> convertFractionToTime() << " for " << this->duration << " minutes" << endl;
+}
+
+/*
+ * PROMISES: to convert the fractionalized double, represting the hour, into a usable format
+ */
+string Booking::convertFractionToTime(){
+    int hour =  (this->hour) / 1;
+    string hourF = to_string(hour);
+    int remainder = ((this -> hour) - hour)*100;
+    remainder = (remainder * (0.6));
+    string minuteF = to_string(remainder);
+    hourF += ":";
+    hourF += minuteF;
+    return hourF;
 }
