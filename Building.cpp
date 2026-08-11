@@ -43,10 +43,18 @@ string Building::get_building_id(){
  */
 void Building::print_information(){
     cout << "Information for building: " << this -> building_id << endl;
-    cout << "It has edges: " << endl;
+    cout << "It has " << (int) this -> rooms.size() << " rooms" << endl;
+    for ( int i = 0; i < (int) this -> rooms.size(); i++) {
+        this -> rooms[i].print_information();
+        cout << "       This room has " << (int) rooms[i].bookings.size() << " bookings: " << endl;
+        for (int j = 0; (int) this -> rooms[i].bookings.size(); j++) {
+            cout <<"            "; this -> rooms[i].bookings[j].displayInformationBooking(1);
+        }
+    }
+    cout << "It has " << (int) this -> edges.size() << " edges: " << endl;
     if ((int) this -> edges.size() != 0 ){
         for (int i = 0; i < (int) this -> edges.size(); i++)
-        cout << " to: " << this -> edges[i].connectedBuilding -> building_id
+        cout << "   to: " << this -> edges[i].connectedBuilding -> building_id
         << " with weight: " << this -> edges[i].weight << endl;
     }
     else {

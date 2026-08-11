@@ -13,10 +13,10 @@ Campus::Campus(){
  */
 void Campus::print_information_campus(){
     cout << "Campus information: " << this -> campus_id << endl;
-    cout << "Campus includes buildings: " << endl;
+    cout << "Campus includes buildings: ";
 
     for (int i = 0; i < (int) campusBuildings.size(); i++){
-        cout << this -> campusBuildings[i] -> get_building_id() << ", ";
+        cout << this -> campusBuildings[i] -> get_building_id() << " ";
     }
 }
  

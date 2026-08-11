@@ -17,8 +17,8 @@ private:
     string building_id; // ID of Building TODO: this is used, almost excusively, throughout the code. perhaps edit?
     string name; // name of building.
     tuple <double, double> lat_long; // coordinate of room
-    vector <Room> rooms; // list of rooms for object
 public:
+    vector <Room> rooms; // list of rooms for object
     vector<Edge> edges; // Stored Vector of pathways
     double distance; // Used in dijstrak's algorithm
     Building* prevBuilding; // Used in dijstrak's algorithm

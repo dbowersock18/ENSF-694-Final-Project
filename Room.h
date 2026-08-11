@@ -23,7 +23,8 @@ public:
     void removeBooking(); // Remove a booking from the building
     void displayInformationAllBookings();  // display information related to all bookings
     vector<Booking>* bookingList(); // returns a pointer to the vector containing ALL the bookings
-    vector<Booking> bookingListFiltered(int, int, int, double, double); // returns a new Vector containing all the filtered Bookings.
+    void queryFilterForBookings(); // CLI for interacting with user filtering books
+    void printBookingListFiltered(Booking*, Booking*); // filters and prints the bookings within the time window specified by the two inputs. Called by CLI queryFilterForBookings()
         // TODO: this might require a copy opertaor function in the booking class to complete
 };
 
@@ -39,8 +40,8 @@ public:
     // ~ Booking(); // deconstructor
     Booking(); // default contructor
     Booking(int, int, int, double, double); // Overloaded constructor to set up a booking object with all required properties
-    void displayInformationBooking(); // displays information related to a specific booking 
-    string convertFractionToTime(); // converts the hour property, into a digestible format
+    void displayInformationBooking(int); // displays information related to a specific booking 
+    string convertFractionToTime(double); // converts the hour property, into a digestible format
 };
 
 #endif // ROOM_H

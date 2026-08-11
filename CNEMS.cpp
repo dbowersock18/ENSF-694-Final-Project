@@ -16,12 +16,12 @@ using namespace std;
 void interactWithUser(Campus*, Graph*); // Method that serves as the Client Interface (instad of another class)
 int obtainUserInput(); // Obtains a numerical user input
 void importBookings(); // Method to obtain a list of bookings from a text file
-void importBuildingInformation(Campus*, const string&); // Method ot obtain building information from a text file
+void importRoomInformation(Campus*, const string&); // Method ot obtain Room information from a text file
 
 int main(void) {
 
     // TEST BLOCK ROOM
-    // file housing campus data
+    // file housing campus data. MUST BE LOADED FIRST! Contains building objects
     const string campusMap= "CampusMap.txt";
     // create objects
     Campus campus;
@@ -30,26 +30,10 @@ int main(void) {
     cout << endl;
     graph.read_input_file(campusMap);
     cout << endl;
-    Room room("ict_204", 100, "classroom");
-    room.addBooking(2026, 8, 10, 6.5, 30);
-    room.addBooking(2026, 8, 11, 7.75, 90);
-    room.displayInformationAllBookings();
-    const string buildingInformation = "buildingInformation.txt";
-    importBuildingInformation(&campus, buildingInformation);
-    // END OF TEST BLOCK
-
-//     // THE BELOW CODE IS FUNCTIONAL ... ONLY COMMENTING OUT TO WORK ON SECTION 2.3
-//     // file housing campus data
-//     const string fileName= "CampusMap.txt";
-//     // create objects
-//     Campus campus;
-//     Graph graph(&campus);
-//     // run program and display information
-//     cout << endl;
-//     graph.read_input_file(fileName);
-//     cout << endl;
-//     interactWithUser(&campus, &graph);
-//     // END OF COMMENT SECTION
+    const string roomInformation = "roomInformation.txt";
+    importRoomInformation(&campus, roomInformation);
+    cout << endl << endl;
+    interactWithUser(&campus, &graph);
 }
 
 /*
@@ -163,52 +147,81 @@ void reloadLastQuery(Campus* campus, Graph* graph){
 */
 void interactWithUser(Campus* campus, Graph* graph){
     cout << "Entry point of user interaction" << endl;
-    cout << "Please press: "  << endl
-    << "    0: to terminate program" << endl
-    << "    1: to calcuate the distance to a location, given a starting location" << endl; 
-    int returnValue = obtainUserInput();
-    if (returnValue == 0) return;
-    if (returnValue == 1) shortestDistanceCalculator(campus, graph, false);
-    cout << endl;
-    int endProgram = 0;
-    while (!endProgram){
-        cout << endl;
-        cout << "Now that the shortest distances have been calculated, the menu options have changed. ";
+    int endProgram = 1;
+    while(endProgram){
         cout << "Please press: "  << endl
         << "    0: to terminate program" << endl
-        << "    1: reset, and calcuate the distance to a new location, given a new starting location" << endl
-        << "    2: walk back to the previous building" << endl
-        << "    3: reload your last query" << endl;
+        << "    1: display all information relevant to current campus" << endl
+        << "    2: to calcuate the distance to a location, given a starting location" << endl; 
         int returnValue = obtainUserInput();
+        endProgram = returnValue;
         if (returnValue == 0) return;
         if (returnValue == 1) {
-            graph -> reset();
-            shortestDistanceCalculator(campus, graph, false);
+            campus -> print_information_campus();
+            campus -> print_information_buildings();
         }
-        if (returnValue == 2) walkBack(campus, graph);
+        if (returnValue == 2) shortestDistanceCalculator(campus, graph, false);
         cout << endl;
-        if (returnValue == 3) {
-            reloadLastQuery(campus, graph);
+        if (returnValue == 2){
+            int secondaryMenu = 1;
+            while (secondaryMenu){
+                cout << endl;
+                cout << "Now that the shortest distances have been calculated, the menu options have changed. ";
+                cout << "Please press: "  << endl
+                << "    0: to terminate program" << endl
+                << "    1: go back to main menu" << endl
+                << "    2: reset, and calcuate the distance to a new location, given a new starting location" << endl
+                << "    3: walk back to the previous building" << endl
+                << "    4: reload your last query" << endl;
+                int returnValue = obtainUserInput();
+                if (returnValue == 0) {
+                    endProgram = 0;
+                    break;
+                }
+                if (returnValue == 1) {
+                    break;
+                    continue;
+                }
+                if (returnValue == 2) {
+                    graph -> reset();
+                    shortestDistanceCalculator(campus, graph, false);
+                }
+                if (returnValue == 3) walkBack(campus, graph);
+                cout << endl;
+                if (returnValue == 4) {
+                    reloadLastQuery(campus, graph);
+                }
+            }
         }
     }
     cout << endl;
     cout << "End point of user interaction" << endl;
 }
 
-void importBuildingInformation(Campus* campus, const string& filename){
+void importRoomInformation(Campus* campus, const string& filename){
     // TODO: POPULATE
     cout<< "Reading input file " << filename << endl;
-    // // Validates the file can be accessed
-    // ifstream infile(filename);
-    // if (!infile) {
-    //     cerr << "Could not open file: " << filename << endl;
-    //     exit(1);
-    // }
-    // string a, b;
-    // int time;
-    // // Interprets and populates the campus object with buildings (a and b) and the weight
-    // // of each path (time)
-    // while (infile >> a >> b >> time) {
+    // Validates the file can be accessed
+    ifstream infile(filename);
+    if (!infile) {
+        cerr << "Could not open file: " << filename << endl;
+        exit(1);
+    }
+    string building, room_name, room_type;
+    int capacity;
+    // Interprets and populates the campus object with buildings (a and b) and the weight
+    // of each path (time)
+    while (infile >> building >> room_name >> capacity >> room_type) {
+        // find building in list of buildings
+        for (int i = 0; i < (int) campus->campusBuildings.size(); i++){
+            if(campus -> campusBuildings[i] -> get_building_id() == building){
+                campus -> campusBuildings[i] -> rooms.push_back(Room(room_name, capacity, room_type));
+                break;
+            }
+        }
+    }
+    cout << "End of reading input file";
+    infile.close();
 }
 
 
