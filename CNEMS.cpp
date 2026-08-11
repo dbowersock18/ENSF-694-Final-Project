@@ -272,7 +272,9 @@ void cliBookingManagement(Campus* campus){
     while (returnValue){
         cout << "Would you like to: " << endl;
         cout << "   0: Return to the main menu" << endl;
-        cout << "   1: View room bookings" << endl;
+        cout << "   1: View all bookings for a given room" << endl;
+        cout << "   2: View bookings for a given room, within a specified window" << endl;
+        cout << "   3: Add booking" << endl;
         cout << "Please enter a value: ";
         cin >> returnValue;
         if (returnValue == 0) break;
@@ -300,6 +302,55 @@ void cliBookingManagement(Campus* campus){
                 if (breakLoop == 1) cout << "That building + room combination does not exist!" << endl << endl;
             }
         }
+        if (returnValue == 2){
+            string building, room;
+            cout << "Please type the building, followed by the room id. eg) ict ict_204 Press 0 for either input to return: ";
+            cin >> building >> room;
+            cout << endl;
+            bool found = 0;
+            // Loops below print information regarding the booking in each buildings
+            for (int i = 0; i < (int) campus->campusBuildings.size(); i++){
+                if(campus -> campusBuildings[i] -> get_building_id() == building){
+                    for (int j = 0; j < (int) campus -> campusBuildings[i]->rooms.size(); j++){
+                        if(campus -> campusBuildings[i]->rooms[j].get_room_id() == room){
+                            cout << "Room found!" << endl;
+                            campus -> campusBuildings[i] -> rooms[j].queryFilterForBookings();
+                            found = 1;
+                        }
+                    }
+                }
+            }
+            if (!found) cout << "Building + Room could not be found" << endl;
+        }
+        if (returnValue == 3){
+            string building, room;
+            cout << "Please type the building, followed by the room id. eg) ict ict_204 Press 0 for either input to return: ";
+            cin >> building >> room;
+            cout << endl;
+            bool found = 0;
+            // Loops below print information regarding the booking in each buildings
+            for (int i = 0; i < (int) campus->campusBuildings.size(); i++){
+                if(campus -> campusBuildings[i] -> get_building_id() == building){
+                    for (int j = 0; j < (int) campus -> campusBuildings[i]->rooms.size(); j++){
+                        if(campus -> campusBuildings[i]->rooms[j].get_room_id() == room){
+                            cout << "Room found!" << endl;
+                            int year, month, day;
+                            double hour, duration;
+                            cout << "Please enter the following, in this specific format: year day month time duration (min)" << endl;
+                            cout << "For example August 11th 2026 7:30am for 2 hours should be entered, exactly: 2026 8 11 7.5 120" << endl
+                            << "noting that the time is fractionalized (7:30am becomes 7.5) and no leading whitespace (8th of August not 08)" << endl;
+                            cout << "Please enter: ";
+                            cin >> year >> month >> day >> hour >> duration;
+                            campus -> campusBuildings[i]->rooms[j].addBooking(year, month, day, hour, duration);
+                            cout << "Booking logged!" << endl;
+                            found = 1;
+                        }
+                    }
+                }
+            }
+            if (!found) cout << "Building + Room could not be found" << endl;
+        }
+        cout << endl;
     }
     cout << endl;
     return;

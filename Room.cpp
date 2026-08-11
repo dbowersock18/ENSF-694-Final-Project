@@ -59,7 +59,7 @@ void Room::queryFilterForBookings(){
     int dayStart, dayEnd;
     double hourStart, hourEnd;
     cout << "Please enter the following, in this specific format: year day month time" << endl;
-    cout << "For example August 11th 2026 7:30am should be entered, exactly: 2026 08 11 7.5" << endl
+    cout << "For example August 11th 2026 7:30am should be entered, exactly: 2026 8 11 7.5" << endl
     << "noting that the time is fractionalized (7:30am becomes 7.5) and no leading whitespace (8th of August not 08)" << endl << endl;
     while(1){
         cout << "With that, please enter your date to start: ";
@@ -80,26 +80,33 @@ void Room::queryFilterForBookings(){
             printBookingListFiltered(&start, &end);
             break;
         }
-        // Booking start(2026, 8, 11, 7.0, 0.0);
-        // Booking end(2026, 8, 12, 8.5, 0.0);
-
     }
 }
 
+// TODO: CONVERT THE BOOL STATEMENTS TO A USABLE INTEGER
 void Room::printBookingListFiltered(Booking* start, Booking* end){
-    start->displayInformationBooking(1); cout << endl;
-    end->displayInformationBooking(1); cout << endl;
     // cycle through the bookings and print those that fall within the time window
     cout << "The following bookings fall within that timeszone specified: " << endl;
+    bool found = 0;
+    int startTime = start->year * 365 * 24 * 60 + start->month * 30.4 * 24 * 60 + start->day * 24 * 60 + start->hour * 60;
+    int endTime = end->year * 365 * 24 * 60 + end->month * 30.4 * 24 * 60 + end->day * 24 * 60 + end->hour * 60;
     for (int i = 0; i < (int) this->bookings.size(); i++){
-        if ((bookings[i].year >= start->year && bookings[i].year <= end->year) &&
-            (bookings[i].month >= start->month && bookings[i].month <= end->month) &&
-            (bookings[i].day >= start->day && bookings[i].day <= end->day) &&
-            (bookings[i].hour >= start->hour && (bookings[i].hour) < end->hour)
-            ) {
-            bookings[i].displayInformationBooking(0);
+        // if ((bookings[i].year >= start->year && bookings[i].year <= end->year) &&
+        //     (bookings[i].month >= start->month && bookings[i].month <= end->month) &&
+        //     (bookings[i].day >= start->day && bookings[i].day <= end->day) &&
+        //     ((bookings[i].hour + bookings[i].duration) >= start->hour && (bookings[i].hour) < end->hour)
+        //     ) 
+        //     {
+        //     bookings[i].displayInformationBooking(0);
+        //     found = 1;
+        // }
+        int time = (this->bookings[i].year) * 365 * 24 * 60 + this->bookings[i].month * 30.4 * 24 * 60 + this->bookings[i].day * 24 * 60 + this->bookings[i].hour * 60 + this->bookings[i].duration;
+        if (time >= startTime && time <= endTime){
+           bookings[i].displayInformationBooking(0);
+            found = 1; 
         }
     }
+    if (!found) cout << "Sorry ... no bookings were found in that specified window!" << endl;
 }
 
 // Default constructor Booking object
@@ -144,6 +151,10 @@ string Booking::convertFractionToTime(double hourD){
     if (remainder != 0) {
         hourF += ":";
         hourF += minuteF;
+    }
+    else {
+        hourF += ":";
+        hourF += "00";
     }
     return hourF;
 }
