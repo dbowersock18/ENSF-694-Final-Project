@@ -7,8 +7,9 @@ using namespace std;
 #include "Building.h"
 #include "Campus.h"
 #include "Graph.h"
+#include "Request.h"
 
-// TODO LIST: 
+// TODO LIST:
 // IMPLEMENT A CHECK TO ENSURE THE USER IS ENTERING A VALID NUMBER
 // Output the current Queue of historical searches
 // Consider moving the class Priority Que from  building to Graph (logistical placement)
@@ -18,6 +19,8 @@ void cliBookingManagement(Campus*); // Client Interface for mananaging the users
 int obtainUserInput(); // Obtains a numerical user input
 void importBookings(Campus*, const string &); // Method to obtain a list of bookings from a text file
 void importRoomInformation(Campus*, const string&); // Method ot obtain Room information from a text file
+void demoPriorityServiceQueue(); // Demonstrates the 2.4 Priority-Based Service Queue feature
+void demoRequestPipeline(); // Demonstrates the 2.6 Incoming Request Processing feature
 
 int main(void) {
 
@@ -158,7 +161,9 @@ void interactWithUser(Campus* campus, Graph* graph){
         << "    0: to terminate program" << endl
         << "    1: display all information relevant to current campus" << endl
         << "    2: to calcuate the distance to a location, given a starting location" << endl
-        << "    3: to manage bookings" << endl;
+        << "    3: to manage bookings" << endl
+        << "    4: demo the priority-based service queue" << endl
+        << "    5: demo the incoming request processing pipeline" << endl;
         int returnValue = obtainUserInput();
         endProgram = returnValue;
         if (returnValue == 0) return;
@@ -201,6 +206,12 @@ void interactWithUser(Campus* campus, Graph* graph){
         if (returnValue == 3){
             // TODO: IMPLEMENT
             cliBookingManagement(campus);
+        }
+        if (returnValue == 4){
+            demoPriorityServiceQueue();
+        }
+        if (returnValue == 5){
+            demoRequestPipeline();
         }
     }
     cout << endl;
@@ -354,4 +365,74 @@ void cliBookingManagement(Campus* campus){
     }
     cout << endl;
     return;
+}
+
+/*
+ * PROMISES: Demonstrates feature 2.4 - the Priority-Based Service Queue.
+ * Adds requests across three priority levels (Emergency, Standard, Low) in a deliberately
+ * mixed arrival order, then serves them all, showing that urgency - not arrival order - decides
+ * service order, and that requests sharing a priority level stay in the order they arrived.
+ */
+void demoPriorityServiceQueue(){
+    cout << "--- Priority-Based Service Queue Demo (Feature 2.4) ---" << endl;
+    PriorityServiceQueue serviceQueue;
+    ServiceRequest requests[] = {
+        ServiceRequest(1, "Room maintenance - flickering lights in ICT-121", LOW),
+        ServiceRequest(2, "IT support - projector not powering on", STANDARD),
+        ServiceRequest(3, "Help desk - fire alarm malfunction in ENG Block", EMERGENCY),
+        ServiceRequest(4, "IT support - wifi outage in Library", STANDARD),
+        ServiceRequest(5, "Help desk - gas leak reported in Science A", EMERGENCY),
+        ServiceRequest(6, "Room maintenance - broken chair in Student Union", LOW),
+        ServiceRequest(7, "IT support - lab computer will not boot", STANDARD)
+    };
+    int numRequests = 7;
+
+    cout << "Adding " << numRequests << " requests in arrival order: " << endl;
+    for (int i = 0; i < numRequests; i++){
+        cout << "   Arrived: [" << requests[i].priorityToString() << "] Request #"
+        << requests[i].id << ": " << requests[i].description << endl;
+        serviceQueue.addRequest(&requests[i]);
+    }
+
+    cout << endl << "Current queue, ordered by the sequence requests will be served: " << endl;
+    serviceQueue.printQueue();
+
+    cout << endl << "Serving requests: " << endl;
+    while (!serviceQueue.isEmpty()){
+        ServiceRequest* next = serviceQueue.serveNext();
+        cout << "   Now serving [" << next -> priorityToString() << "] Request #"
+        << next -> id << ": " << next -> description << endl;
+    }
+    cout << "--- End of Priority-Based Service Queue Demo ---" << endl;
+}
+
+/*
+ * PROMISES: Demonstrates feature 2.6 - Incoming Request Processing.
+ * Simulates 20 sequential navigation/service requests being enqueued as they arrive,
+ * then dequeues and processes each one, showing that the pipeline always preserves
+ * strict first-in-first-out (arrival) order.
+ */
+void demoRequestPipeline(){
+    cout << "--- Incoming Request Processing Demo (Feature 2.6) ---" << endl;
+    RequestPipeline pipeline;
+    const int numRequests = 20;
+    ServiceRequest requests[numRequests];
+
+    cout << "Enqueuing " << numRequests << " sequential requests as they arrive: " << endl;
+    for (int i = 0; i < numRequests; i++){
+        RequestPriority priority = (i % 3 == 0) ? EMERGENCY : (i % 3 == 1) ? STANDARD : LOW;
+        string description = (i % 2 == 0)
+            ? "Navigation query #" + to_string(i + 1)
+            : "Service ticket #" + to_string(i + 1);
+        requests[i] = ServiceRequest(i + 1, description, priority);
+        cout << "   Enqueued: Request #" << requests[i].id << ": " << requests[i].description << endl;
+        pipeline.enqueueRequest(&requests[i]);
+    }
+
+    cout << endl << "Processing " << pipeline.size() << " requests, strictly in arrival order: " << endl;
+    while (!pipeline.isEmpty()){
+        ServiceRequest* next = pipeline.dequeueRequest();
+        cout << "   Now processing Request #" << next -> id << ": " << next -> description << endl;
+    }
+    cout << "--- End of Incoming Request Processing Demo ---" << endl;
 }
