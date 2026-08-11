@@ -22,9 +22,10 @@ Room::Room(string room_id, int capacity, string room_type){
  * PROMISES: Prints information relevant to the room
  */
 void Room::print_information(){
-    cout << "   Room ID: " << this -> room_id;
-    cout << " Room capacity " << this -> capacity;
-    cout << " Room type: " << this -> room_type;
+    cout << "   Room ID: " << this -> room_id << " --";
+    cout << " Room capacity " << this -> capacity << " --";
+    cout << " Room type: " << this -> room_type << " --";
+    cout << " Bookings: " << (int) this -> bookings.size();
     cout << endl;
 }
 
@@ -38,9 +39,14 @@ void Room::addBooking(int year, int month, int day, double hour, double duration
 }
 
 void Room::displayInformationAllBookings(){
-    cout << "For room " << this->get_room_id() << " the following books are as shown: " << endl;
-    for (int i = 0; i < (int) this->bookings.size(); i++ ){
-        this->bookings[i].displayInformationBooking(0);
+    if((int) this -> bookings.size() == 0){
+        cout << "No bookings are present!";
+    }
+    else {
+        cout << "For room " << this->get_room_id() << " the following books are as shown: " << endl;
+        for (int i = 0; i < (int) this->bookings.size(); i++ ){
+            this->bookings[i].displayInformationBooking(0);
+        }
     }
 }
 

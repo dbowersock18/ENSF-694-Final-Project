@@ -14,8 +14,9 @@ using namespace std;
 // Consider moving the class Priority Que from  building to Graph (logistical placement)
 
 void interactWithUser(Campus*, Graph*); // Method that serves as the Client Interface (instad of another class)
+void cliBookingManagement(Campus*); // Client Interface for mananaging the users wishes relative to the booking software
 int obtainUserInput(); // Obtains a numerical user input
-void importBookings(); // Method to obtain a list of bookings from a text file
+void importBookings(Campus*, const string &); // Method to obtain a list of bookings from a text file
 void importRoomInformation(Campus*, const string&); // Method ot obtain Room information from a text file
 
 int main(void) {
@@ -33,6 +34,10 @@ int main(void) {
     const string roomInformation = "roomInformation.txt";
     importRoomInformation(&campus, roomInformation);
     cout << endl << endl;
+    const string bookingInformation = "RoomBooking.txt";
+    importBookings(&campus, bookingInformation);
+    cout << endl << endl;
+
     interactWithUser(&campus, &graph);
 }
 
@@ -152,7 +157,8 @@ void interactWithUser(Campus* campus, Graph* graph){
         cout << "Please press: "  << endl
         << "    0: to terminate program" << endl
         << "    1: display all information relevant to current campus" << endl
-        << "    2: to calcuate the distance to a location, given a starting location" << endl; 
+        << "    2: to calcuate the distance to a location, given a starting location" << endl
+        << "    3: to manage bookings" << endl;
         int returnValue = obtainUserInput();
         endProgram = returnValue;
         if (returnValue == 0) return;
@@ -160,9 +166,8 @@ void interactWithUser(Campus* campus, Graph* graph){
             campus -> print_information_campus();
             campus -> print_information_buildings();
         }
-        if (returnValue == 2) shortestDistanceCalculator(campus, graph, false);
-        cout << endl;
         if (returnValue == 2){
+            shortestDistanceCalculator(campus, graph, false);
             int secondaryMenu = 1;
             while (secondaryMenu){
                 cout << endl;
@@ -193,11 +198,18 @@ void interactWithUser(Campus* campus, Graph* graph){
                 }
             }
         }
+        if (returnValue == 3){
+            // TODO: IMPLEMENT
+            cliBookingManagement(campus);
+        }
     }
     cout << endl;
     cout << "End point of user interaction" << endl;
 }
 
+/*
+ * Reads "RoomInformation.txt" to populate all the rooms related to specific buildings 
+ */
 void importRoomInformation(Campus* campus, const string& filename){
     // TODO: POPULATE
     cout<< "Reading input file " << filename << endl;
@@ -209,8 +221,7 @@ void importRoomInformation(Campus* campus, const string& filename){
     }
     string building, room_name, room_type;
     int capacity;
-    // Interprets and populates the campus object with buildings (a and b) and the weight
-    // of each path (time)
+    // populates each building object with the relevant room information
     while (infile >> building >> room_name >> capacity >> room_type) {
         // find building in list of buildings
         for (int i = 0; i < (int) campus->campusBuildings.size(); i++){
@@ -224,4 +235,72 @@ void importRoomInformation(Campus* campus, const string& filename){
     infile.close();
 }
 
+/*
+ * Reads "importBooking.txt" to populate all the bookings tagged to a specific room 
+ */
+void importBookings(Campus* campus, const string & filename){
+    // TODO: POPULATE
+    cout<< "Reading input file " << filename << endl;
+    // Validates the file can be accessed
+    ifstream infile(filename);
+    if (!infile) {
+        cerr << "Could not open file: " << filename << endl;
+        exit(1);
+    }
+    string building, room;
+    int year, month, day;
+    double hour, duration;
+    // populates each room object with the relevant booking information
+    while (infile >> building >> room >> year >> month >> day >> hour >> duration) {
+        // find building in list of buildings
+        for (int i = 0; i < (int) campus->campusBuildings.size(); i++){
+            if(campus -> campusBuildings[i] -> get_building_id() == building){
+                for (int j = 0; j < (int) campus -> campusBuildings[i]->rooms.size(); j++){
+                    if(campus -> campusBuildings[i]->rooms[j].get_room_id() == room){
+                        campus -> campusBuildings[i]->rooms[j].addBooking(year, month, day, hour, duration);
+                    }
+                }
+            }
+        }
+    }
+    cout << "End of reading input file";
+    infile.close();
+}
 
+void cliBookingManagement(Campus* campus){
+    int returnValue = 1;
+    while (returnValue){
+        cout << "Would you like to: " << endl;
+        cout << "   0: Return to the main menu" << endl;
+        cout << "   1: View room bookings" << endl;
+        cout << "Please enter a value: ";
+        cin >> returnValue;
+        if (returnValue == 0) break;
+        if (returnValue == 1) {
+            int breakLoop = 1;
+            while (breakLoop){
+                string building, room;
+                cout << "Please type the building, followed by the room id. eg) ict ict_204 Press 0 for either input to return: ";
+                cin >> building >> room;
+                cout << endl;
+                if ((building == "0" || room == "0")) break;
+                // Loops below print information regarding the booking in each buildings
+                for (int i = 0; i < (int) campus->campusBuildings.size(); i++){
+                    if(campus -> campusBuildings[i] -> get_building_id() == building){
+                        for (int j = 0; j < (int) campus -> campusBuildings[i]->rooms.size(); j++){
+                            if(campus -> campusBuildings[i]->rooms[j].get_room_id() == room){
+                                campus->campusBuildings[i]->rooms[j].displayInformationAllBookings();
+                                breakLoop = 0;
+                                cout << endl;
+                                break;
+                            }
+                        }
+                    }
+                }
+                if (breakLoop == 1) cout << "That building + room combination does not exist!" << endl << endl;
+            }
+        }
+    }
+    cout << endl;
+    return;
+}

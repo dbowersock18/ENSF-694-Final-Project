@@ -145,7 +145,7 @@ void Graph::printGraph(){
         cout << "   getting to " << campus -> campusBuildings[i] -> get_building_id() <<
         " takes " << campus -> campusBuildings[i] -> distance <<" minutes and you must navigate via: ... ";
         printPath((campus -> campusBuildings[i]));
-        cout << endl;
+        cout << endl << endl;
     }
 }
 

@@ -46,16 +46,15 @@ void Building::print_information(){
     cout << "It has " << (int) this -> rooms.size() << " rooms" << endl;
     for ( int i = 0; i < (int) this -> rooms.size(); i++) {
         this -> rooms[i].print_information();
-        cout << "       This room has " << (int) rooms[i].bookings.size() << " bookings: " << endl;
-        for (int j = 0; (int) this -> rooms[i].bookings.size(); j++) {
-            cout <<"            "; this -> rooms[i].bookings[j].displayInformationBooking(1);
+        for (int j = 0; j < (int) this -> rooms[i].bookings.size(); j++) {
+            cout <<"    "; this -> rooms[i].bookings[j].displayInformationBooking(0);
         }
     }
-    cout << "It has " << (int) this -> edges.size() << " edges: " << endl;
+    cout << "It has " << (int) this -> edges.size() << " pathways: " << endl;
     if ((int) this -> edges.size() != 0 ){
         for (int i = 0; i < (int) this -> edges.size(); i++)
-        cout << "   to: " << this -> edges[i].connectedBuilding -> building_id
-        << " with weight: " << this -> edges[i].weight << endl;
+        cout << "   to " << this -> edges[i].connectedBuilding -> building_id
+        << " that takes " << this -> edges[i].weight << " minutes" << endl;
     }
     else {
         cout << "0" << endl;
