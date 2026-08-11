@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <string>
 #include <cmath>
+#include <limits>
 #include <algorithm>
 #include <fstream>
 #include "graph.h"
@@ -120,7 +121,7 @@ void Graph::dijkstra(){
             // Que current Path
             q.enqueue(currentB -> edges[i].connectedBuilding);
             // Check for infinty, if yes populate and que
-            if (currentB->edges[i].connectedBuilding -> distance == infinity()) {
+            if (currentB->edges[i].connectedBuilding -> distance == numeric_limits<double>::infinity()) {
                 currentB->edges[i].connectedBuilding -> distance = currentB -> distance + currentB->edges[i].weight;
                 currentB->edges[i].connectedBuilding -> prevBuilding = currentB;
             }
@@ -207,12 +208,14 @@ void Graph::read_input_file(const string& filename){
         if (!a_exists) {
             buildingA = new Building(a);
             campus->campusBuildings.push_back(buildingA);
+            campus->indexBuilding(buildingA); // 2.5: register in the fast-lookup index
         }
         else buildingA = campus -> campusBuildings[a_index];
         Building* buildingB;
         if (!b_exists) {
             buildingB = new Building(b);
             campus->campusBuildings.push_back(buildingB);
+            campus->indexBuilding(buildingB); // 2.5: register in the fast-lookup index
         }
         else buildingB = campus -> campusBuildings[b_index];
         // add edge to both buildings
@@ -231,7 +234,7 @@ void Graph::reset(){
     this -> start = nullptr; 
     this -> end = nullptr;
     for (int i = 0; i < (int) campus->campusBuildings.size(); i++) {
-        campus -> campusBuildings[i]->distance = infinity();
+        campus -> campusBuildings[i]->distance = numeric_limits<double>::infinity();
         campus -> campusBuildings[i]->prevBuilding = nullptr;
     }
 }

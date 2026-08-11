@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <cmath>
+#include <limits>
 using namespace std;
 #include "Building.h"
 
@@ -15,7 +16,7 @@ Building::Building(){
 // Overloaded Constructor w/o edge
 Building::Building(string building_id){
     this -> building_id = building_id;
-    this -> distance = infinity();
+    this -> distance = numeric_limits<double>::infinity();
 }
 
 // Overloaded Constructor for Building with one Edge

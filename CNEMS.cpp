@@ -1,13 +1,16 @@
-#include <iostream> 
+#include <iostream>
 #include <fstream>
 #include <string>
 #include <iomanip>
+#include <chrono>
+#include <cstdlib>
 using namespace std;
 #include "Room.h"
 #include "Building.h"
 #include "Campus.h"
 #include "Graph.h"
 #include "Request.h"
+#include "HashTable.h"
 
 // TODO LIST:
 // IMPLEMENT A CHECK TO ENSURE THE USER IS ENTERING A VALID NUMBER
@@ -21,6 +24,7 @@ void importBookings(Campus*, const string &); // Method to obtain a list of book
 void importRoomInformation(Campus*, const string&); // Method ot obtain Room information from a text file
 void demoPriorityServiceQueue(); // Demonstrates the 2.4 Priority-Based Service Queue feature
 void demoRequestPipeline(); // Demonstrates the 2.6 Incoming Request Processing feature
+void demoFastLookup(Campus*); // Demonstrates the 2.5 Fast Building and Resource Lookup feature
 
 int main(void) {
 
@@ -36,6 +40,7 @@ int main(void) {
     cout << endl;
     const string roomInformation = "roomInformation.txt";
     importRoomInformation(&campus, roomInformation);
+    campus.buildRoomIndex(); // 2.5: index rooms only after they've all finished loading
     cout << endl << endl;
     const string bookingInformation = "RoomBooking.txt";
     importBookings(&campus, bookingInformation);
@@ -163,7 +168,8 @@ void interactWithUser(Campus* campus, Graph* graph){
         << "    2: to calcuate the distance to a location, given a starting location" << endl
         << "    3: to manage bookings" << endl
         << "    4: demo the priority-based service queue" << endl
-        << "    5: demo the incoming request processing pipeline" << endl;
+        << "    5: demo the incoming request processing pipeline" << endl
+        << "    6: demo fast building/room lookup" << endl;
         int returnValue = obtainUserInput();
         endProgram = returnValue;
         if (returnValue == 0) return;
@@ -212,6 +218,9 @@ void interactWithUser(Campus* campus, Graph* graph){
         }
         if (returnValue == 5){
             demoRequestPipeline();
+        }
+        if (returnValue == 6){
+            demoFastLookup(campus);
         }
     }
     cout << endl;
@@ -435,4 +444,78 @@ void demoRequestPipeline(){
         cout << "   Now processing Request #" << next -> id << ": " << next -> description << endl;
     }
     cout << "--- End of Incoming Request Processing Demo ---" << endl;
+}
+
+/*
+ * PROMISES: Demonstrates feature 2.5 - Fast Building and Resource Lookup.
+ * Shows insert/lookup/delete on the real building and room indexes (including a lookup
+ * for a key that does not exist), then benchmarks average lookup time against synthetic
+ * tables of growing size to show lookup performance stays roughly constant regardless
+ * of how many records are stored.
+ */
+void demoFastLookup(Campus* campus){
+    cout << "--- Fast Building and Resource Lookup Demo (Feature 2.5) ---" << endl;
+
+    cout << "Building index currently holds " << campus -> buildingIndex.size() << " entries." << endl;
+    string existingBuildingId = campus -> campusBuildings[0] -> get_building_id();
+    Building* foundBuilding = campus -> findBuilding(existingBuildingId);
+    cout << "Lookup '" << existingBuildingId << "': "
+    << (foundBuilding != nullptr ? "FOUND -> " + foundBuilding -> get_building_id() : "NOT FOUND") << endl;
+
+    string missingBuildingId = "ZZZ-404";
+    Building* missingBuilding = campus -> findBuilding(missingBuildingId);
+    cout << "Lookup '" << missingBuildingId << "' (a key that does not exist): "
+    << (missingBuilding != nullptr ? "FOUND" : "NOT FOUND, as expected") << endl;
+
+    Building* demoBuilding = new Building("DEMO-BLD");
+    campus -> indexBuilding(demoBuilding);
+    cout << "Inserted new building 'DEMO-BLD'. Lookup now returns: "
+    << (campus -> findBuilding("DEMO-BLD") != nullptr ? "FOUND" : "NOT FOUND") << endl;
+    campus -> removeBuildingIndex("DEMO-BLD");
+    cout << "Deleted 'DEMO-BLD' from the index. Lookup now returns: "
+    << (campus -> findBuilding("DEMO-BLD") != nullptr ? "FOUND" : "NOT FOUND, as expected") << endl;
+    delete demoBuilding; // not linked into the graph, safe to free directly
+
+    cout << endl << "Room index currently holds " << campus -> roomIndex.size() << " entries." << endl;
+    string existingRoomId = "";
+    for (int i = 0; i < (int) campus -> campusBuildings.size() && existingRoomId.empty(); i++){
+        if (!campus -> campusBuildings[i] -> rooms.empty()) {
+            existingRoomId = campus -> campusBuildings[i] -> rooms[0].get_room_id();
+        }
+    }
+    if (!existingRoomId.empty()){
+        Room* foundRoom = campus -> findRoom(existingRoomId);
+        cout << "Lookup room '" << existingRoomId << "': "
+        << (foundRoom != nullptr ? "FOUND -> " + foundRoom -> get_room_id() : "NOT FOUND") << endl;
+    }
+    string missingRoomId = "ZZZ-000";
+    Room* missingRoom = campus -> findRoom(missingRoomId);
+    cout << "Lookup room '" << missingRoomId << "' (a key that does not exist): "
+    << (missingRoom != nullptr ? "FOUND" : "NOT FOUND, as expected") << endl;
+
+    cout << endl << "Benchmarking average lookup time as table size grows (synthetic data): " << endl;
+    int sizesToTest[] = {1000, 10000, 100000};
+    for (int s = 0; s < 3; s++){
+        int n = sizesToTest[s];
+        HashTable<int> syntheticTable;
+        vector<int> values(n);
+        vector<string> keys;
+        keys.reserve(n);
+        for (int i = 0; i < n; i++){
+            values[i] = i;
+            string key = "key" + to_string(i);
+            syntheticTable.insert(key, &values[i]);
+            keys.push_back(key);
+        }
+        const int lookupsToPerform = 20000;
+        auto startTime = chrono::high_resolution_clock::now();
+        for (int i = 0; i < lookupsToPerform; i++){
+            syntheticTable.lookup(keys[rand() % n]);
+        }
+        auto endTime = chrono::high_resolution_clock::now();
+        double avgNanoseconds = chrono::duration<double, nano>(endTime - startTime).count() / lookupsToPerform;
+        cout << "   n = " << n << " records -> average lookup time: " << avgNanoseconds
+        << " ns (load factor " << syntheticTable.loadFactor() << ")" << endl;
+    }
+    cout << "--- End of Fast Building and Resource Lookup Demo ---" << endl;
 }
