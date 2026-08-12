@@ -26,6 +26,7 @@ public:
     void queryFilterForBookings(); // CLI for interacting with user filtering books
     void printBookingListFiltered(Booking*, Booking*); // filters and prints the bookings within the time window specified by the two inputs. Called by CLI queryFilterForBookings()
         // TODO: this might require a copy opertaor function in the booking class to complete
+    void printNextBooking(); //Displays the next booking, starting from the first booking if one is not selected.
 };
 
 #endif // ROOM_H

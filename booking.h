@@ -58,14 +58,6 @@ Booking::Booking(int year, int month, int day, int hour, int duration, std::stri
 
 
 
-
-
-
-//Define the functions for an AVL tree to hold the bookings, as well as functions to search the tree, add nodes, and delete nodes.
-//The key number for the node will be the time the booking starts.
-
-
-
 //Function to display all events within a timeframe with upper and lower bounds
 
 

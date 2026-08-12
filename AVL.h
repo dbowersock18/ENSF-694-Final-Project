@@ -86,9 +86,15 @@ public:
 
     void printNext();
     //Shifts the cursor/selection up to the next node, and then prints it out.
-    //TODO: perhaps implemented with the same logic as "inorder", just running it a single time instead of recursively?
+    
+    void printCurrent();
+    //Prints the currently selected node.
 
-    void select_root();
+    void selectRoot();
+
+    bool selectFirst();
+
+    bool isRoot();
     
  
 };

@@ -52,6 +52,18 @@ void Room::displayInformationAllBookings(){
     }
 }
 
+void Room::printNextBooking(){
+    //If the cursor is on root, move it back to the first booking and then print it.
+    if (AVL.isRoot() == 1){
+        AVL.selectFirst();
+        AVL.printCurrent();
+    }
+    //Otherwise, print the next booking as normal.
+    else { 
+        AVL.printNext();
+    }
+}
+
 /*
  * PROMISES: Client Interface for filtering books. Requests a user defined timeframe, and prints the results to the screen 
  */
@@ -66,14 +78,14 @@ void Room::queryFilterForBookings(){
     while(1){
         cout << "With that, please enter your date to start: ";
         cin >> yearStart >> monthStart >> dayStart >> hourStart;
-        Booking start(yearStart, monthStart, dayStart, hourStart, 0.0);
+        Booking start(yearStart, monthStart, dayStart, hourStart, 0, "Search term start");
         cout << endl;
         cout << "Now please enter the date to end querying, in the same format: ";
         cin >> yearEnd >> monthEnd >> dayEnd >> hourEnd;
-        Booking end(yearEnd, monthEnd, dayEnd, hourEnd, 0.0);
+        Booking end(yearEnd, monthEnd, dayEnd, hourEnd, 0, "Search term end");
         cout << endl;
-        cout << "You have entered: "; start.displayInformationBooking(1);
-        cout << " to "; end.displayInformationBooking(1); cout << endl;
+        cout << "You have entered: "; start.displayInformationBooking();
+        cout << " to "; end.displayInformationBooking(); cout << endl;
         cout << "Is this correct? 0 if not, 1 if yes ";
         bool test; 
         cin >> test; 
@@ -85,7 +97,9 @@ void Room::queryFilterForBookings(){
     }
 }
 
+//This whole thing has to be finished, and the AVL tree needs a new function for it too. WIP, commenting it out so it doesn't cause compiler errors.
 // TODO: CONVERT THE BOOL STATEMENTS TO A USABLE INTEGER
+/*
 void Room::printBookingListFiltered(Booking* start, Booking* end){
     // cycle through the bookings and print those that fall within the time window
     cout << "The following bookings fall within that timeszone specified: " << endl;
@@ -111,4 +125,4 @@ void Room::printBookingListFiltered(Booking* start, Booking* end){
     if (!found) cout << "Sorry ... no bookings were found in that specified window!" << endl;
 }
 
-
+*/

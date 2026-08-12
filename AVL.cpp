@@ -167,7 +167,7 @@ void AVLTree::printAll(Node* node) {
 
 
 void AVLTree::find(long time) {
-    select_root();
+    selectRoot();
     if(root != nullptr)
         find(root, time);
     else
@@ -197,7 +197,7 @@ void AVLTree::find(Node* root, long time){
   
 }
 
-void AVLTree::select_root(){
+void AVLTree::selectRoot(){
     if(root != nullptr) {
         cursor = root;
         return;
@@ -233,7 +233,35 @@ void AVLTree::printNext(){
     }
 }
 
+void AVLTree::printCurrent(){
+    if (cursor == nullptr){
+        std::cout << "No booking selected!";
+    }
+    if (cursor != nullptr){
+        cursor->booking.displayInformationBooking();
+    }
+}
+
 int AVLTree::getSize(){
     return size;
+}
+
+bool AVLTree::selectFirst(){
+    if (root == nullptr){
+        return 0;
+    }
+    cursor = root;
+    
+    while (cursor->left != nullptr){
+        cursor = cursor->left;
+    }
+    return 1;
+}
+
+bool AVLTree::isRoot(){
+    if (cursor == root){
+        return 1;
+    }
+    return 0;
 }
 
