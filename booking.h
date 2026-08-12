@@ -7,24 +7,23 @@
 using namespace std;
 
 
-//IDEA: go down the tree like normal, comparing the time as the key. But also check if the end time has any conflicts as you go; like check if time is greater or less than 
-//the node's time, but also if the endtime is different IE start is lesser and end is greater means it's a conflict and do not add it.
+
 
 class Booking{
     private:
     int year;
     int month;
     int day;
-    double hour;
-    double duration;
+    int hour;
+    int duration;
 
     public:
     Booking();  //Default constructor
-    Booking(int year, int month, int day, double hour, double duration);
+    
+    Booking(int year, int month, int day, int hour, int duration);
+    
     void displayInformationBooking(int option);
     //Function for displaying information about the given booking.
-    string convertFractionToTime(double hourD);
-    bool collisionDetect(Booking proposedBooking);
 
     void 
 
@@ -33,11 +32,16 @@ class Booking{
 
 // Default constructor Booking object
 Booking::Booking(){
-    // DO SOMETHING
+    this -> year = 2000;
+    this -> month = 1;
+    this -> day = 1;
+    this -> hour = 0; 
+    this -> duration = 60;
+    //Sets a default time and duration in the case of an otherwise uninitialized booking object
 }
 
 // Overloaded constructor Booking object
-Booking::Booking(int year, int month, int day, double hour, double duration){
+Booking::Booking(int year, int month, int day, int hour, int duration){
     this -> year = year;
     this -> month = month;
     this -> day = day;
@@ -52,34 +56,15 @@ void Booking::displayInformationBooking(int option){
     // Display all information about booking
     if (option == 0){
         cout << "   a booking occurs " <<  this -> year << "/" << this -> month << "/" << this -> day
-        << " at " << this -> convertFractionToTime( this -> hour) << " for " << this->duration << " minutes" << endl;
+        << " at " << this -> hour << " for " << this->duration << " minutes" << endl;
     }
     // Drops information regarding duration
     if (option == 1){
         cout << this -> year << "/" << this -> month << "/" << this -> day
-        << " at " << this -> convertFractionToTime( this -> hour);
+        << " at " << this -> hour;
     }
 }
 
-/*
- * PROMISES: to convert the fractionalized double, represting the hour, into a usable format
- */
-string Booking::convertFractionToTime(double hourD){
-    int hour =  (hourD) / 1;
-    string hourF = to_string(hour);
-    int remainder = ((this -> hour) - hour)*100;
-    remainder = (remainder * (0.6));
-    string minuteF = to_string(remainder);
-    if (remainder != 0) {
-        hourF += ":";
-        hourF += minuteF;
-    }
-    else {
-        hourF += ":";
-        hourF += "00";
-    }
-    return hourF;
-}
 
 
 

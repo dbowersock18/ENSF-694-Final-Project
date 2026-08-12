@@ -58,10 +58,10 @@ void Room::queryFilterForBookings(){
     int yearStart, yearEnd;
     int monthStart, monthEnd;
     int dayStart, dayEnd;
-    double hourStart, hourEnd;
+    int hourStart, hourEnd;
     cout << "Please enter the following, in this specific format: year day month time" << endl;
-    cout << "For example August 11th 2026 7:30am should be entered as, exactly: 2026 8 11 7.5" << endl
-    << "noting that the time is fractionalized (7:30am becomes 7.5) and no leading whitespace (8 August not 08)" << endl << endl;
+    cout << "For example August 11th 2026 7:30am should be entered as, exactly: 2026 8 11 0730" << endl
+    << "noting that the time is in 24 hour time" << endl << endl;
     while(1){
         cout << "With that, please enter your date to start: ";
         cin >> yearStart >> monthStart >> dayStart >> hourStart;
