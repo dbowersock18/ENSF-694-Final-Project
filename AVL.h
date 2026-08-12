@@ -25,7 +25,7 @@ struct Node {
 class AVLTree {
 private:
     Node* root;
-    //Node* cursor;
+    Node* cursor;
     int getBalance(Node* N);
     //Returns the right height minus the left height for the given node
     Node* rightRotate(Node* y);
@@ -53,7 +53,7 @@ public:
     int size() const;
     //Returns the amount of nodes in the tree
     
-    void insert(int time, long endTime, std::string purpose);
+    void insert(long time, long endTime, std::string purpose);
     //Interface for adding nodes to the tree, which will also balance the tree if needed.
     
     int height(const Node* N);
@@ -70,6 +70,13 @@ public:
 
     void remove(Node* N);
     //Deletes the specified node, rotating and fixing the AVL tree as needed.
+
+    void printNext();
+    //Shifts the cursor/selection up to the next node, and then prints it out.
+    //TODO: perhaps implemented with the same logic as "inorder", just running it a single time instead of recursively?
+
+    void select_root();
+    
  
 };
 
