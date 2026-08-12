@@ -144,18 +144,25 @@ void AVLTree::insert(long time, long endTime, Booking booking) {
 	}
  }
 
+//Public function to access full version of printAll
+void AVLTree::printAll(){
+    printAll(root);
+}
+
+
 // Recursive function
-void AVLTree::inorder(const Node* root) {
+void AVLTree::printAll(Node* node) {
 	//Base case: an empty (sub)tree has nothing to print.
-	if (root == nullptr){
+	if (node == nullptr){
 		return;
 	}
 
 	//Visit left subtree, then this node, then right subtree.
-	inorder(root->left);
-	//Add a cout printout for the booking data, with time conversion, right here.
+	printAll(node->left);
+	
+    node->booking.displayInformationBooking();
 
-	inorder(root->right);
+	printAll(node->right);
 }
 
 

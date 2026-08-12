@@ -45,6 +45,8 @@ private:
 
     int size;
     //Contains the size of the tree
+
+    void printAll(Node* node);
     
     
     //void destroy();
@@ -70,7 +72,7 @@ public:
     int height(const Node* N);
     //If node N exists, returns its height. Otherwise, returns 0.
     
-    void inorder(const Node* root);
+    void printAll();
     //Prints out the entire tree in order of start times, presenting the start times and end times for each booking.
     
     void find(long time);

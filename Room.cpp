@@ -43,14 +43,12 @@ void Room::addBooking(int year, int month, int day, int hour, int duration, stri
 }
 
 void Room::displayInformationAllBookings(){
-    if((int) this -> bookings.size() == 0){
+    if(AVL.getSize() == 0){
         cout << "No bookings are present!";
     }
     else {
         cout << "For room " << this->get_room_id() << " the bookings are as shown: " << endl;
-        for (int i = 0; i < (int) this->bookings.size(); i++ ){
-            this->bookings[i].displayInformationBooking(0);
-        }
+        AVL.printAll();
     }
 }
 
