@@ -3,6 +3,7 @@
 #include <cmath>
 using namespace std;
 #include "Room.h"
+#include "Booking.h"
 
 // Default constructor for the room object 
 Room::Room(){
@@ -43,7 +44,7 @@ void Room::displayInformationAllBookings(){
         cout << "No bookings are present!";
     }
     else {
-        cout << "For room " << this->get_room_id() << " the following books are as shown: " << endl;
+        cout << "For room " << this->get_room_id() << " the bookings are as shown: " << endl;
         for (int i = 0; i < (int) this->bookings.size(); i++ ){
             this->bookings[i].displayInformationBooking(0);
         }
@@ -59,8 +60,8 @@ void Room::queryFilterForBookings(){
     int dayStart, dayEnd;
     double hourStart, hourEnd;
     cout << "Please enter the following, in this specific format: year day month time" << endl;
-    cout << "For example August 11th 2026 7:30am should be entered, exactly: 2026 8 11 7.5" << endl
-    << "noting that the time is fractionalized (7:30am becomes 7.5) and no leading whitespace (8th of August not 08)" << endl << endl;
+    cout << "For example August 11th 2026 7:30am should be entered as, exactly: 2026 8 11 7.5" << endl
+    << "noting that the time is fractionalized (7:30am becomes 7.5) and no leading whitespace (8 August not 08)" << endl << endl;
     while(1){
         cout << "With that, please enter your date to start: ";
         cin >> yearStart >> monthStart >> dayStart >> hourStart;
@@ -109,52 +110,4 @@ void Room::printBookingListFiltered(Booking* start, Booking* end){
     if (!found) cout << "Sorry ... no bookings were found in that specified window!" << endl;
 }
 
-// Default constructor Booking object
-Booking::Booking(){
-    // DO SOMETHING
-}
 
-// Overloaded constructor Booking object
-Booking::Booking(int year, int month, int day, double hour, double duration){
-    this -> year = year;
-    this -> month = month;
-    this -> day = day;
-    this -> hour = hour; 
-    this -> duration = duration;
-}
-
-/*
-* PROMISES: to return information related to a specific booking 
-*/
-void Booking::displayInformationBooking(int option){
-    // Display all information about booking
-    if (option == 0){
-        cout << "   a booking occurs " <<  this -> year << "/" << this -> month << "/" << this -> day
-        << " at " << this -> convertFractionToTime( this -> hour) << " for " << this->duration << " minutes" << endl;
-    }
-    // Drops information regarding duration
-    if (option == 1){
-        cout << this -> year << "/" << this -> month << "/" << this -> day
-        << " at " << this -> convertFractionToTime( this -> hour);
-    }
-}
-
-/*
- * PROMISES: to convert the fractionalized double, represting the hour, into a usable format
- */
-string Booking::convertFractionToTime(double hourD){
-    int hour =  (hourD) / 1;
-    string hourF = to_string(hour);
-    int remainder = ((this -> hour) - hour)*100;
-    remainder = (remainder * (0.6));
-    string minuteF = to_string(remainder);
-    if (remainder != 0) {
-        hourF += ":";
-        hourF += minuteF;
-    }
-    else {
-        hourF += ":";
-        hourF += "00";
-    }
-    return hourF;
-}
