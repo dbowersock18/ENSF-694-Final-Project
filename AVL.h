@@ -10,7 +10,6 @@
 struct Info{
     long time;
     long endTime;
-    std::string purpose;    //Holds the purpose of this booking, IE lecture, study, and event.
 };
 
 struct Node {
@@ -21,7 +20,7 @@ struct Node {
     Node* parent;
     int height;
 
-    Node(long time, long endTime, std::string purpose, Booking booking, Node* p = nullptr) : data{time, endTime, purpose}, booking(booking), 
+    Node(long time, long endTime, Booking booking, Node* p = nullptr) : data{time, endTime}, booking(booking), 
                                                                                     left(nullptr), right(nullptr), parent(p), height(1) {}
 };
 
@@ -38,7 +37,7 @@ private:
     Node* leftRotate(Node* x);
     //Makes a left rotation on the node "x"
     
-    Node* insert(Node* node, long time, long endTime, std::string purpose, Booking booking, Node* parent);
+    Node* insert(Node* node, long time, long endTime, Booking booking, Node* parent);
     //Adds a new node to the tree, checking if it has time conflicts. If a conflict is detected it will fail to add a new node and print a message to the console.
     
     void find(Node* root, long time);
@@ -61,7 +60,7 @@ public:
     int size() const;
     //Returns the amount of nodes in the tree
     
-    void insert(long time, long endTime, std::string purpose, Booking booking, Node* parent);
+    void insert(long time, long endTime, Booking booking, Node* parent);
     //Interface for adding nodes to the tree, which will also balance the tree if needed.
     
     int height(const Node* N);

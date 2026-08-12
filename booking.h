@@ -16,16 +16,18 @@ class Booking{
     int day;
     int hour;
     int duration;
+    std::string purpose;    //Holds the purpose of this booking, IE lecture, study, and event.
 
     public:
     Booking();  //Default constructor
     
-    Booking(int year, int month, int day, int hour, int duration);
+    Booking(int year, int month, int day, int hour, int duration, std::string purpose);
     
-    void displayInformationBooking(int option);
+    void displayInformationBooking();
     //Function for displaying information about the given booking.
 
-    void 
+    std::string getPurpose();
+    //Returns string of booking purpose
 
 };
 
@@ -37,33 +39,21 @@ Booking::Booking(){
     this -> day = 1;
     this -> hour = 0; 
     this -> duration = 60;
+    this -> purpose = "Default";
     //Sets a default time and duration in the case of an otherwise uninitialized booking object
 }
 
 // Overloaded constructor Booking object
-Booking::Booking(int year, int month, int day, int hour, int duration){
+Booking::Booking(int year, int month, int day, int hour, int duration, std::string purpose){
     this -> year = year;
     this -> month = month;
     this -> day = day;
     this -> hour = hour; 
     this -> duration = duration;
+    this -> purpose = purpose;
 }
 
-/*
-* PROMISES: to return information related to a specific booking 
-*/
-void Booking::displayInformationBooking(int option){
-    // Display all information about booking
-    if (option == 0){
-        cout << "   a booking occurs " <<  this -> year << "/" << this -> month << "/" << this -> day
-        << " at " << this -> hour << " for " << this->duration << " minutes" << endl;
-    }
-    // Drops information regarding duration
-    if (option == 1){
-        cout << this -> year << "/" << this -> month << "/" << this -> day
-        << " at " << this -> hour;
-    }
-}
+
 
 
 

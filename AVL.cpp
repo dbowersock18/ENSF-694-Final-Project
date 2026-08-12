@@ -63,29 +63,29 @@ Node* AVLTree::rightRotate(Node* y) {
 	return y;
  }
 
-void AVLTree::insert(long time, long endTime, std::string purpose, Booking booking, Node* parent) {
-    root = insert(root, time, endTime, purpose, booking, Node* parent);
+void AVLTree::insert(long time, long endTime, Booking booking, Node* parent) {
+    root = insert(root, time, endTime, booking, parent);
 }
 
 // Recursive function
- Node* AVLTree::insert(Node* node, long time, long endTime, std::string purpose, Booking booking, Node* parent) {
+ Node* AVLTree::insert(Node* node, long time, long endTime, Booking booking, Node* parent) {
     //Inserts the given value into the tree and rebalances if needed.
 
 	//If we reach the end (the node is nullptr), construct a new node and return it.
 	if (node == nullptr) 
-        return new Node(time, endTime, purpose, booking, parent); 
+        return new Node(time, endTime, booking, parent); 
 
 	//If the start time is less than the current node, recursively call insert to the left.
     if (time < node->data.time) {
         //For each time it moves left, it will check if the new event starts or ends during the existing event, and end the recursion with a message if it does.
         if (endTime > node->data.time) {
             std::cout << "Time conflict: new event ends after an existing event starts." << std::endl;
-            std::cout << "Conflicting event: " << node->data.purpose << " at " << node->data.time << " to " << node->data.endTime << std::endl;
+            std::cout << "Conflicting event: " << node->booking.getPurpose() << " at " << node->data.time << " to " << node->data.endTime << std::endl;
             return node;
         }
         if (time < node->data.endTime){
             std::cout << "Time conflict: new event starts before an existing event ends." << std::endl;
-            std::cout << "Conflicting event: " << node->data.purpose << " at " << node->data.time << " to " << node->data.endTime << std::endl;
+            std::cout << "Conflicting event: " << node->booking.getPurpose() << " at " << node->data.time << " to " << node->data.endTime << std::endl;
             return node;
         }
         node->left = insert(node->left, time, endTime, purpose, booking, node);
@@ -95,11 +95,11 @@ void AVLTree::insert(long time, long endTime, std::string purpose, Booking booki
     else if (time > node->data.time) {
         if (time < node->data.endTime){
             std::cout << "Time conflict: new event starts before an existing event ends." << std::endl;
-            std::cout << "Conflicting event: " << node->data.purpose << " at " << node->data.time << " to " << node->data.endTime << std::endl;
+            std::cout << "Conflicting event: " << node->booking.getPurpose() << " at " << node->data.time << " to " << node->data.endTime << std::endl;
             //TODO; convert that time (internal function time, a single long) to human readable time. Perhaps create a function in booking.h/cpp?
             return node;
         }
-        node->right = insert(node->right, time, endTime, purpose, booking, node); 
+        node->right = insert(node->right, time, endTime, booking, node); 
     }
 	
 	//If the start time equals the current node's start time, return the existing node (no booking two events on the same start time)
