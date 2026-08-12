@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 
+//Based on the structures from Assignment 5
+
 struct Info{
     long time;
     long endTime;
