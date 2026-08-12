@@ -8,6 +8,17 @@
 [https://github.com/dbowersock18/ENSF-694-Final-Project.git](https://github.com/dbowersock18/ENSF-694-Final-Project.git)
 
 ### Introduction
+This project, and corresponding repository, addresses the problems outlined in "ENSF694 Term Project Guidelines.pdf" found within the repository. These problems are as followed:
+1. Create and navigate (via a shortest distance algorithm) a Campus environment
+2. Allow and manage the booking of rooms within the Campus
+3. Create and process requests that simulate a service Queue and priority Queue
+4. Maintain fast lookup and balancing in all aspects
+<br> <br>
+
+The team has addressed these problems via all of the cpp & h files within the repository. 
+1. CNEMS.cpp is functionally, the entry point into the program and the Client Interface
+2. Building.cpp/h, Campus.cpp/h, Hashtable.cpp/h, Room.cpp/h, Request.cpp/h, Roombooking.cpp/h, AVL.cpp/h, and graph.cpp/h are all custom created classes/objects that programatically solve these isses
+3. All text files, including RoomBooking.txt, RoomInformation.txt, and CampusMap.txt, serve as input files to load the information required for the program to run. eg) CampusMap.txt is a list of all the campus buildings and it's corresponding pathways.
 
 ### Instructions to run the application:
 - Fill these in
