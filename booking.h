@@ -3,9 +3,12 @@
 
 #include <iostream>
 #include <string>
+#include "AVL.h"
 using namespace std;
 
-//Define a function for turning a booking time into a single integer that can be compared.
+
+//IDEA: go down the tree like normal, comparing the time as the key. But also check if the end time has any conflicts as you go; like check if time is greater or less than 
+//the node's time, but also if the endtime is different IE start is lesser and end is greater means it's a conflict and do not add it.
 
 class Booking{
     private:
@@ -19,9 +22,13 @@ class Booking{
     Booking();  //Default constructor
     Booking(int year, int month, int day, double hour, double duration);
     void displayInformationBooking(int option);
-    string convertFractionToTime(double hourD)
+    //Function for displaying information about the given booking.
+    string convertFractionToTime(double hourD);
+    bool collisionDetect(Booking proposedBooking);
 
-}
+    void 
+
+};
 
 
 // Default constructor Booking object
