@@ -32,7 +32,7 @@ int main(void) {
     // file housing campus data. MUST BE LOADED FIRST! Contains building objects
     const string campusMap= "CampusMap.txt";
     // create objects
-    Campus campus;
+    Campus campus("University of Calgary");
     Graph graph(&campus);
     // run program and display information
     cout << endl;
@@ -114,6 +114,7 @@ void shortestDistanceCalculator(Campus* campus, Graph* graph, bool lastQueue){
         cout << "Starting from " << graph -> getStart() -> get_building_id() << " it takes "
         << graph -> getEnd() -> distance << " minutes to get to " << graph -> getEnd() -> get_building_id() << " with a route of: ";
         graph -> printPath( graph -> getEnd());
+        cout << endl;
     }
 }
 
@@ -175,6 +176,7 @@ void interactWithUser(Campus* campus, Graph* graph){
         if (returnValue == 0) return;
         if (returnValue == 1) {
             campus -> print_information_campus();
+            cout << endl;
             campus -> print_information_buildings();
         }
         if (returnValue == 2){

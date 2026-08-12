@@ -6,6 +6,31 @@ using namespace std;
 // Default Construtor
 Campus::Campus(){
     this -> campus_id = "Default - Campus ID";
+    this -> numOfPathways = 0;
+    this -> numOfBuildings = 0;
+}
+
+// Overloaded constructor
+Campus::Campus(string name){
+    this -> campus_id = name;
+    this -> numOfPathways = 0;
+    this -> numOfBuildings = 0;
+}
+
+/*
+ *  LIST OF STANDARD GETTER AND SETTERS BELOW 
+ */
+void Campus::addToNumOfBuildings(){
+    this -> numOfBuildings += 1;
+}
+void Campus::addToNumOfPathways(){
+    this -> numOfPathways += 1;
+}
+int Campus::getNumOfBuildings(){
+    return this -> numOfBuildings;
+}
+int Campus::getNumOfPathways(){
+    return this -> numOfPathways;
 }
 
 /*
@@ -13,8 +38,8 @@ Campus::Campus(){
  */
 void Campus::print_information_campus(){
     cout << "Campus information: " << this -> campus_id << endl;
+    cout << "This campus has " << this->getNumOfBuildings() << " buildings and " << this->getNumOfPathways() << " pathways" << endl;
     cout << "Campus includes buildings: ";
-
     for (int i = 0; i < (int) campusBuildings.size(); i++){
         cout << this -> campusBuildings[i] -> get_building_id() << " ";
     }

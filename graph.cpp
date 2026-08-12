@@ -206,6 +206,7 @@ void Graph::read_input_file(const string& filename){
         // create two buildings and add to campus if reqired
         Building* buildingA;
         if (!a_exists) {
+            campus->addToNumOfBuildings();
             buildingA = new Building(a);
             campus->campusBuildings.push_back(buildingA);
             campus->indexBuilding(buildingA); // 2.5: register in the fast-lookup index
@@ -213,14 +214,15 @@ void Graph::read_input_file(const string& filename){
         else buildingA = campus -> campusBuildings[a_index];
         Building* buildingB;
         if (!b_exists) {
+            campus->addToNumOfBuildings();
             buildingB = new Building(b);
             campus->campusBuildings.push_back(buildingB);
             campus->indexBuilding(buildingB); // 2.5: register in the fast-lookup index
         }
         else buildingB = campus -> campusBuildings[b_index];
         // add edge to both buildings
-        buildingA -> add_edge(Edge(buildingB, time));
-        buildingB -> add_edge(Edge(buildingA, time));
+        buildingA -> add_edge(Edge(buildingB, time)); campus->addToNumOfPathways();
+        buildingB -> add_edge(Edge(buildingA, time)); campus->addToNumOfPathways();
     }
     cout << "Finished reading from file" << endl;
     infile.close();
