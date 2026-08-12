@@ -46,7 +46,6 @@ private:
     
 public:
     AVLTree();
-    ~AVLTree();
     AVLTree& operator= (const AVLTree& rsh);
     AVLTree(const AVLTree& src);
 
