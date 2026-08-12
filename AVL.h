@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include "booking.h"
 
 //Based on the structures from Assignment 5
 
@@ -14,12 +15,14 @@ struct Info{
 
 struct Node {
     Info data;
+    Booking booking;
     Node* left;
     Node* right;
-    //Node* parent;
+    Node* parent;
     int height;
 
-    Node(long a, long b, std::string c, Node* p = nullptr) : data{a, b, c}, left(nullptr), right(nullptr), height(1) {}
+    Node(long time, long endTime, std::string purpose, Booking booking, Node* p = nullptr) : data{time, endTime, purpose}, booking(booking), 
+                                                                                    left(nullptr), right(nullptr), parent(p), height(1) {}
 };
 
 class AVLTree {
@@ -28,14 +31,20 @@ private:
     Node* cursor;
     int getBalance(Node* N);
     //Returns the right height minus the left height for the given node
+
     Node* rightRotate(Node* y);
     //Makes a right rotation on the node "y"
+    
     Node* leftRotate(Node* x);
     //Makes a left rotation on the node "x"
-    Node* insert(Node* node, long time, long endTime, std::string purpose);
+    
+    Node* insert(Node* node, long time, long endTime, std::string purpose, Booking booking, Node* parent);
     //Adds a new node to the tree, checking if it has time conflicts. If a conflict is detected it will fail to add a new node and print a message to the console.
+    
     void find(Node* root, long time);
     //Finds a node starting at that exact specified time 
+    
+    
     //void destroy();
     //Completely destroys the AVL tree
     //copy(const AVLTree& source);
@@ -52,7 +61,7 @@ public:
     int size() const;
     //Returns the amount of nodes in the tree
     
-    void insert(long time, long endTime, std::string purpose);
+    void insert(long time, long endTime, std::string purpose, Booking booking, Node* parent);
     //Interface for adding nodes to the tree, which will also balance the tree if needed.
     
     int height(const Node* N);

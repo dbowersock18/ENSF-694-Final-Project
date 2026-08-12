@@ -36,6 +36,10 @@ Node* AVLTree::rightRotate(Node* y) {
 	y->height = (1 + std::max(height(y->left), height(y->right)));
 	x->height = (1 + std::max(height(x->left), height(x->right)));
 
+    //Update parents
+	x->parent = y->parent;
+	y->parent = x;
+
 	return x;
  }
 
@@ -51,21 +55,25 @@ Node* AVLTree::rightRotate(Node* y) {
 	//Update height
 	y->height = (1 + std::max(height(y->left), height(y->right)));
 	x->height = (1 + std::max(height(x->left), height(x->right)));
+
+    //Update parents
+	y->parent = x->parent;
+	x->parent = y;
     
 	return y;
  }
 
-void AVLTree::insert(long time, long endTime, std::string purpose) {
-    root = insert(root, time, endTime, purpose);
+void AVLTree::insert(long time, long endTime, std::string purpose, Booking booking, Node* parent) {
+    root = insert(root, time, endTime, purpose, booking, Node* parent);
 }
 
 // Recursive function
- Node* AVLTree::insert(Node* node, long time, long endTime, std::string purpose) {
+ Node* AVLTree::insert(Node* node, long time, long endTime, std::string purpose, Booking booking, Node* parent) {
     //Inserts the given value into the tree and rebalances if needed.
 
 	//If we reach the end (the node is nullptr), construct a new node and return it.
 	if (node == nullptr) 
-        return new Node(time, endTime, purpose); 
+        return new Node(time, endTime, purpose, booking, parent); 
 
 	//If the start time is less than the current node, recursively call insert to the left.
     if (time < node->data.time) {
@@ -80,7 +88,7 @@ void AVLTree::insert(long time, long endTime, std::string purpose) {
             std::cout << "Conflicting event: " << node->data.purpose << " at " << node->data.time << " to " << node->data.endTime << std::endl;
             return node;
         }
-        node->left = insert(node->left, time, endTime, purpose);
+        node->left = insert(node->left, time, endTime, purpose, booking, node);
     }
 	
 	//If the start time is greater than the current node, recursively call insert to the right.
@@ -91,7 +99,7 @@ void AVLTree::insert(long time, long endTime, std::string purpose) {
             //TODO; convert that time (internal function time, a single long) to human readable time. Perhaps create a function in booking.h/cpp?
             return node;
         }
-        node->right = insert(node->right, time, endTime, purpose); 
+        node->right = insert(node->right, time, endTime, purpose, booking, node); 
     }
 	
 	//If the start time equals the current node's start time, return the existing node (no booking two events on the same start time)
@@ -187,5 +195,33 @@ void AVLTree::select_root(){
         return;
     }
     cursor = nullptr;
+}
+
+void AVLTree::printNext(){
+    if (cursor == nullptr){
+        std::cout << "No more bookings!";
+    }
+    //If there are nodes to the right of cursor, go to that node and then down to the farthest left node beneath it.
+    if (cursor->right != nullptr) {
+        cursor = cursor->right;
+        while (cursor->left != nullptr){
+            cursor = cursor->left;
+        }
+        cursor->booking.displayInformationBooking();
+    }
+    
+    //If there is no node to the right, go to the parent node and keep going up the tree until the cursor is to the left of its parent (meaning it is earlier than the parent)
+    if (cursor->right == nullptr){
+        while (cursor->parent != nullptr && cursor == cursor->parent->right) {    //If the parent is a nullpointer do not continue
+            cursor = cursor->parent;                                              //Set the cursor to select its parent and continue
+        }
+        cursor = cursor->parent;        //One more cursor = cursor->parent so that the cursor is set to the next value
+        if (cursor != nullptr){
+            cursor->booking.displayInformationBooking();
+        }
+        if (cursor == nullptr){
+            std::cout << "No more bookings!";
+        }
+    }
 }
 
