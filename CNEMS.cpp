@@ -269,17 +269,16 @@ void importBookings(Campus* campus, const string & filename){
         cerr << "Could not open file: " << filename << endl;
         exit(1);
     }
-    string building, room;
-    int year, month, day;
-    double hour, duration;
+    string building, room, purpose;
+    int year, month, day, hour, duration;
     // populates each room object with the relevant booking information
-    while (infile >> building >> room >> year >> month >> day >> hour >> duration) {
+    while (infile >> building >> room >> year >> month >> day >> hour >> duration >> purpose) {
         // find building in list of buildings
         for (int i = 0; i < (int) campus->campusBuildings.size(); i++){
             if(campus -> campusBuildings[i] -> get_building_id() == building){
                 for (int j = 0; j < (int) campus -> campusBuildings[i]->rooms.size(); j++){
                     if(campus -> campusBuildings[i]->rooms[j].get_room_id() == room){
-                        campus -> campusBuildings[i]->rooms[j].addBooking(year, month, day, hour, duration);
+                        campus -> campusBuildings[i]->rooms[j].addBooking(year, month, day, hour, duration, purpose);
                     }
                 }
             }
@@ -345,7 +344,7 @@ void cliBookingManagement(Campus* campus){
             if (!found) cout << "Building + Room could not be found" << endl;
         }
         if (returnValue == 3){
-            string building, room;
+            string building, room, purpose;
             cout << "Please type the building, followed by the room id. eg) ict ict_204 Press 0 for either input to return: ";
             cin >> building >> room;
             cout << endl;
@@ -358,12 +357,12 @@ void cliBookingManagement(Campus* campus){
                             cout << "Room found!" << endl;
                             int year, month, day;
                             double hour, duration;
-                            cout << "Please enter the following, in this specific format: year day month time duration (min)" << endl;
-                            cout << "For example August 11th 2026 7:30am for 2 hours should be entered, exactly: 2026 8 11 7.5 120" << endl
-                            << "noting that the time is fractionalized (7:30am becomes 7.5) and no leading whitespace (8th of August not 08)" << endl;
+                            cout << "Please enter the following, in this specific format: year day month time duration (min) purpose" << endl;
+                            cout << "For example August 11th 2026 7:30am for a class 2 hours should be entered, exactly: 2026 8 11 0730 120 Class" << endl
+                            << "noting that the time is in 24 hour format (7:30am becomes 0730) and no leading whitespace (8th of August not 08)" << endl;
                             cout << "Please enter: ";
-                            cin >> year >> month >> day >> hour >> duration;
-                            campus -> campusBuildings[i]->rooms[j].addBooking(year, month, day, hour, duration);
+                            cin >> year >> month >> day >> hour >> duration >> purpose;
+                            campus -> campusBuildings[i]->rooms[j].addBooking(year, month, day, hour, duration, purpose);
                             cout << "Booking logged!" << endl;
                             found = 1;
                         }

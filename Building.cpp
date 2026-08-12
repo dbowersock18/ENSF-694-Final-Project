@@ -47,9 +47,11 @@ void Building::print_information(){
     cout << "It has " << (int) this -> rooms.size() << " rooms" << endl;
     for ( int i = 0; i < (int) this -> rooms.size(); i++) {
         this -> rooms[i].print_information();
-        for (int j = 0; j < (int) this -> rooms[i].bookings.size(); j++) {
+        //Commented out to replace with built-in booking print function
+        this -> rooms[i].displayInformationAllBookings();
+        /*for (int j = 0; j < (int) this -> rooms[i].bookings.size(); j++) {
             cout <<"    "; this -> rooms[i].bookings[j].displayInformationBooking(0);
-        }
+        }*/
     }
     cout << "It has " << (int) this -> edges.size() << " pathways: " << endl;
     if ((int) this -> edges.size() != 0 ){
