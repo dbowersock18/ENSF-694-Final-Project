@@ -53,7 +53,7 @@ public:
     int size() const;
     //Returns the amount of nodes in the tree
     
-    void insert(int time, long endTime);
+    void insert(int time, long endTime, std::string purpose);
     //Interface for adding nodes to the tree, which will also balance the tree if needed.
     
     int height(const Node* N);
