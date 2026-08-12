@@ -99,10 +99,10 @@ void Room::queryFilterForBookings(){
 
 //This whole thing has to be finished, and the AVL tree needs a new function for it too. WIP, commenting it out so it doesn't cause compiler errors.
 // TODO: CONVERT THE BOOL STATEMENTS TO A USABLE INTEGER
-/*
+
 void Room::printBookingListFiltered(Booking* start, Booking* end){
     // cycle through the bookings and print those that fall within the time window
-    cout << "The following bookings fall within that timeszone specified: " << endl;
+    /*cout << "The following bookings fall within that timeszone specified: " << endl;
     bool found = 0;
     int startTime = start->year * 365 * 24 * 60 + start->month * 30.4 * 24 * 60 + start->day * 24 * 60 + start->hour * 60;
     int endTime = end->year * 365 * 24 * 60 + end->month * 30.4 * 24 * 60 + end->day * 24 * 60 + end->hour * 60;
@@ -123,6 +123,7 @@ void Room::printBookingListFiltered(Booking* start, Booking* end){
         }
     }
     if (!found) cout << "Sorry ... no bookings were found in that specified window!" << endl;
+    */
 }
 
-*/
+

@@ -20,7 +20,7 @@ struct Node {
     Node* parent;
     int height;
 
-    Node(long time, long endTime, Booking booking, Node* p = nullptr) : data{time, endTime}, booking(booking), 
+    Node(long time, long endTime, Booking book, Node* p = nullptr) : data{time, endTime}, booking(book), 
                                                                                     left(nullptr), right(nullptr), parent(p), height(1) {}
 };
 

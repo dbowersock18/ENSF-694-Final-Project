@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-#include "AVL.h"
 using namespace std;
 
 
@@ -31,30 +30,6 @@ class Booking{
     //Converts the internal booking time to a single long for use in the AVL tree
 
 };
-
-
-// Default constructor Booking object
-Booking::Booking(){
-    this -> year = 2000;
-    this -> month = 1;
-    this -> day = 1;
-    this -> hour = 0; 
-    this -> duration = 60;
-    this -> purpose = "Default";
-    //Sets a default time and duration in the case of an otherwise uninitialized booking object
-}
-
-// Overloaded constructor Booking object
-Booking::Booking(int year, int month, int day, int hour, int duration, std::string purpose){
-    this -> year = year;
-    this -> month = month;
-    this -> day = day;
-    this -> hour = hour; 
-    this -> duration = duration;
-    this -> purpose = purpose;
-}
-
-
 
 //Function to display all events within a timeframe with upper and lower bounds
 
