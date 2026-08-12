@@ -72,9 +72,10 @@ void AVLTree::insert(long time, long endTime, Booking booking) {
     //Inserts the given value into the tree and rebalances if needed.
 
 	//If we reach the end (the node is nullptr), construct a new node and return it.
-	if (node == nullptr) 
+	if (node == nullptr){
         size ++;
         return new Node(time, endTime, booking, parent); 
+    }
 
 	//If the start time is less than the current node, recursively call insert to the left.
     if (time < node->data.time) {

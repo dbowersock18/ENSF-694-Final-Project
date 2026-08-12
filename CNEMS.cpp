@@ -28,7 +28,6 @@ void demoFastLookup(Campus*); // Demonstrates the 2.5 Fast Building and Resource
 
 int main(void) {
 
-    // TEST BLOCK ROOM
     // file housing campus data. MUST BE LOADED FIRST! Contains building objects
     const string campusMap= "CampusMap.txt";
     // create objects
