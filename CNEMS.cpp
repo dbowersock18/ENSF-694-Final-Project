@@ -55,6 +55,7 @@ int main(void) {
 int obtainUserInput(){
     cout << "Obtaining user Input: ";
     int userInput;
+    cin.clear();
     cin >> userInput;
     cout << endl;
     //TODO: VALIDATION CHECK TO ENSURE USER IS ENTERING CORRECT NUMBERS
