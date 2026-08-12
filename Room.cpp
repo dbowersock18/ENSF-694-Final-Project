@@ -4,6 +4,7 @@
 using namespace std;
 #include "Room.h"
 #include "Booking.h"
+#include "AVL.h"
 
 // Default constructor for the room object 
 Room::Room(){
@@ -23,10 +24,10 @@ Room::Room(string room_id, int capacity, string room_type){
  * PROMISES: Prints information relevant to the room
  */
 void Room::print_information(){
-    cout << "   Room ID: " << this -> room_id << " --";
+    cout << " Room ID: " << this -> room_id << " --";
     cout << " Room capacity " << this -> capacity << " --";
     cout << " Room type: " << this -> room_type << " --";
-    cout << " Bookings: " << (int) this -> bookings.size();
+    cout << " Bookings: " << (int) this -> AVL.getSize();
     cout << endl;
 }
 
@@ -34,9 +35,11 @@ string Room::get_room_id(){
     return this -> room_id;
 }
 
-void Room::addBooking(int year, int month, int day, double hour, double duration){
-    // TODO: ENSURE THERE IS NO COLLISIONS WITH ADDING A BOOKING
-    bookings.push_back(Booking(year, month, day, hour, duration));
+//Adds a new booking for the room. Will print an error message and fail to add the booking if there is a time conflict.
+void Room::addBooking(int year, int month, int day, int hour, int duration, string purpose){
+    Booking* newBooking = new Booking(year, month, day, hour, duration, purpose);
+    AVL.insert(newBooking->convertTime(), newBooking->convertTime() + duration, *newBooking);
+    
 }
 
 void Room::displayInformationAllBookings(){

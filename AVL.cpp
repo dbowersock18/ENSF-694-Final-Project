@@ -63,8 +63,8 @@ Node* AVLTree::rightRotate(Node* y) {
 	return y;
  }
 
-void AVLTree::insert(long time, long endTime, Booking booking, Node* parent) {
-    root = insert(root, time, endTime, booking, parent);
+void AVLTree::insert(long time, long endTime, Booking booking) {
+    root = insert(root, time, endTime, booking, nullptr);
 }
 
 // Recursive function
@@ -73,6 +73,7 @@ void AVLTree::insert(long time, long endTime, Booking booking, Node* parent) {
 
 	//If we reach the end (the node is nullptr), construct a new node and return it.
 	if (node == nullptr) 
+        size ++;
         return new Node(time, endTime, booking, parent); 
 
 	//If the start time is less than the current node, recursively call insert to the left.
@@ -88,7 +89,7 @@ void AVLTree::insert(long time, long endTime, Booking booking, Node* parent) {
             std::cout << "Conflicting event: " << node->booking.getPurpose() << " at " << node->data.time << " to " << node->data.endTime << std::endl;
             return node;
         }
-        node->left = insert(node->left, time, endTime, purpose, booking, node);
+        node->left = insert(node->left, time, endTime, booking, node);
     }
 	
 	//If the start time is greater than the current node, recursively call insert to the right.
@@ -223,5 +224,9 @@ void AVLTree::printNext(){
             std::cout << "No more bookings!";
         }
     }
+}
+
+int AVLTree::getSize(){
+    return size;
 }
 

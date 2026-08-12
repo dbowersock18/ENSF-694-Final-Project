@@ -16,7 +16,7 @@ class Booking{
     int day;
     int hour;
     int duration;
-    std::string purpose;    //Holds the purpose of this booking, IE lecture, study, and event.
+    std::string purpose;    //Holds the purpose of this booking, IE lecture, study, event.
 
     public:
     Booking();  //Default constructor
@@ -28,6 +28,9 @@ class Booking{
 
     std::string getPurpose();
     //Returns string of booking purpose
+
+    long convertTime();
+    //Converts the internal booking time to a single long for use in the AVL tree
 
 };
 

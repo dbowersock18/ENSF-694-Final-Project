@@ -42,6 +42,9 @@ private:
     
     void find(Node* root, long time);
     //Finds a node starting at that exact specified time 
+
+    int size;
+    //Contains the size of the tree
     
     
     //void destroy();
@@ -54,13 +57,14 @@ private:
     
 public:
     AVLTree();
-    AVLTree& operator= (const AVLTree& rsh);
-    AVLTree(const AVLTree& src);
+    //Uncomment these if things stop working, otherwise delete
+    //AVLTree& operator= (const AVLTree& rsh);
+    //AVLTree(const AVLTree& src);
 
-    int size() const;
+    int getSize();
     //Returns the amount of nodes in the tree
     
-    void insert(long time, long endTime, Booking booking, Node* parent);
+    void insert(long time, long endTime, Booking booking);
     //Interface for adding nodes to the tree, which will also balance the tree if needed.
     
     int height(const Node* N);
