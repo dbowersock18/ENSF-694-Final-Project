@@ -1,6 +1,8 @@
 #include "AVL.h"
 
 //Adapted from our answers for Assignment 5
+// TODO: Function to delete a reservation
+// TODO: Display bookings between two time stamps
 
 AVLTree::AVLTree() : root(nullptr) /*cursor(nullptr)*/ {}
 
@@ -161,7 +163,7 @@ void AVLTree::printAll(Node* node) {
 	//Visit left subtree, then this node, then right subtree.
 	printAll(node->left);
 	
-    node->booking.displayInformationBooking();
+    node->booking.displayInformationBooking(0);
 
 	printAll(node->right);
 }
@@ -216,7 +218,7 @@ void AVLTree::printNext(){
         while (cursor->left != nullptr){
             cursor = cursor->left;
         }
-        cursor->booking.displayInformationBooking();
+        cursor->booking.displayInformationBooking(0);
     }
     
     //If there is no node to the right, go to the parent node and keep going up the tree until the cursor is to the left of its parent (meaning it is earlier than the parent)
@@ -226,7 +228,7 @@ void AVLTree::printNext(){
         }
         cursor = cursor->parent;        //One more cursor = cursor->parent so that the cursor is set to the next value
         if (cursor != nullptr){
-            cursor->booking.displayInformationBooking();
+            cursor->booking.displayInformationBooking(0);
         }
         if (cursor == nullptr){
             std::cout << "No more bookings!";
@@ -234,12 +236,34 @@ void AVLTree::printNext(){
     }
 }
 
+void AVLTree::query(long time, long endTime) {
+    query(root, time, endTime);
+}
+
+//TODO: FINISH IMPLEMENTING
+void AVLTree::query(Node* node, long time, long endTime){
+    if (node == nullptr) return;
+
+    // If left subtree might contain valid nodes, search it
+    if (node->data.time >= time)
+        query(node->left, time, endTime);
+
+    // Check if THIS node is within the range
+    if (node->data.time >= time && node->data.endTime <= endTime) {
+        node->booking.displayInformationBooking(0);
+    }
+
+    // If right subtree might contain valid nodes, search it
+    if (node->data.time <= endTime)
+        query(node->right, time, endTime);
+}
+
 void AVLTree::printCurrent(){
     if (cursor == nullptr){
         std::cout << "No booking selected!";
     }
     if (cursor != nullptr){
-        cursor->booking.displayInformationBooking();
+        cursor->booking.displayInformationBooking(0);
     }
 }
 

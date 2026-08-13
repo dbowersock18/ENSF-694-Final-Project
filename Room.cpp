@@ -84,8 +84,8 @@ void Room::queryFilterForBookings(){
         cin >> yearEnd >> monthEnd >> dayEnd >> hourEnd;
         Booking end(yearEnd, monthEnd, dayEnd, hourEnd, 0, "Search term end");
         cout << endl;
-        cout << "You have entered: "; start.displayInformationBooking();
-        cout << " to "; end.displayInformationBooking(); cout << endl;
+        cout << "You have entered: "; start.displayInformationBooking(1);
+        cout << " to "; end.displayInformationBooking(1); cout << endl;
         cout << "Is this correct? 0 if not, 1 if yes ";
         bool test; 
         cin >> test; 
@@ -101,6 +101,12 @@ void Room::queryFilterForBookings(){
 // TODO: CONVERT THE BOOL STATEMENTS TO A USABLE INTEGER
 
 void Room::printBookingListFiltered(Booking* start, Booking* end){
+    cout << "The following bookings fall within the specified window:" << endl;
+
+    long startTime = start->convertTime();
+    long endTime   = end->convertTime();
+
+    AVL.query(startTime, endTime);
     // cycle through the bookings and print those that fall within the time window
     /*cout << "The following bookings fall within that timeszone specified: " << endl;
     bool found = 0;

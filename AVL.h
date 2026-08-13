@@ -48,6 +48,7 @@ private:
 
     void printAll(Node* node);
     
+    void query(Node* node, long time, long endTime);
     
     //void destroy();
     //Completely destroys the AVL tree

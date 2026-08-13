@@ -20,7 +20,7 @@ class Booking{
     
     Booking(int year, int month, int day, int hour, int duration, std::string purpose);
     
-    void displayInformationBooking();
+    void displayInformationBooking(int option);
     //Function for displaying information about the given booking.
 
     std::string getPurpose();
