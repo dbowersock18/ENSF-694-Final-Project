@@ -35,14 +35,14 @@ The below image is a visual representation of the campus layout used for this pr
 The screenshot below demonstrates the output when the user selects the option to display information regarding the campus. New buildings, rooms, and bookings can be added quite easily, and at volume, using the text files
 ![alt text](image.png)
 
-#### Shortest Path Query
+#### Shortest Path Query 2.1
 When the user selects the shortest path query, they are prompted with a list of buildings and asked to provide the start and end location. After a quick verification the input is correct, the user is given the pathway between the start and end locations, and the distance/time to and from. The algorithm behind this is discussed in the design decisions section below. <br> <br>
 ![alt text](image-2.png)
 
 Resetting the query and selecting another option <br> <br>
 ![alt text](image-3.png)
 
-#### Undo Navigation
+#### Undo Navigation 2.2
 If a user would like to undo the path they can either: 
 Walk back to the previous buliding <br> <br>
 ![alt text](image-4.png)
@@ -50,26 +50,27 @@ Walk back to the previous buliding <br> <br>
 Or, reload the last query completely <br> <br>
 ![alt text](image-5.png)
 
-#### Booking range query
+#### Booking range query 2.3
 Going back to the main menu, the user has other options as well. One of them is to manage bookings; specifically to look up when a building has a booking!
 <br> <br>
 ![alt text](image-6.png)
 
-#### Priority Que Demo
+#### Priority Que Demo 2.4
 An important component of a campus is being able to address different requests, with different priority levels. An example of this program accomplishing that is below.
 <br><br>
 ![alt text](image-7.png)
 
-#### Fast Lookup Demo
+#### Fast Lookup Demo 2.5
 Another important component of this program is being able to obtain information quickly and efficiently. The screenshot below demonstrates such.
 <br><br>
 ![alt text](image-8.png)
 
-#### Request Pipeline Demo
+#### Request Pipeline Demo 2.6
 Finally, the screenbelow demonstrates at least 10 requests being enqueued and dequed in arrival order.
 ![alt text](image-9.png)
 
-### Required features
+#### Balanced Event Index (Bonus)
+- TOOD: Eric to complete
 
 ### Design Decisions
 - TODO: Dylan to discuss dijkstra's algorithm
