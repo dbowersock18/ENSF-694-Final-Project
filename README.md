@@ -21,15 +21,23 @@ The team has addressed these problems via all of the cpp & h files within the re
 3. All text files, including RoomBooking.txt, RoomInformation.txt, and CampusMap.txt, serve as input files to load the information required for the program to run. eg) CampusMap.txt is a list of all the campus buildings and it's corresponding pathways.
 
 ### Instructions to run the application:
-- Fill these in
-- Fill these in
-- Fill these in
+- To start the program, please run the "a.exe" file found in the repository.
+- The entry point to the program will be a menu with several options. These options are directly related to the project problems and desired outcomes.
+- Navigation is only integer input (for the different text options) and input of strings specific to buildings and rooms. NOTE, input other than what is expected may crash the program; it was assummed the user interacts with the program as intended.
+![alt text](image-1.png)
 
 ### Campus Layout
 The below image is a visual representation of the campus layout used for this project. There is a total of 16 buildings and 36 pathways. Note that from each building, visually it looks like there is only 1 path way but, from a implementation perspective, there is two; one going and one returning. The building count and pathways is calculated computationally in the program. <br>
-![](https://github.com/dbowersock18/ENSF-694-Final-Project/blob/79086e79d343be2c33b034f1dd5d3003ceda614e/Campus%20Map%20-%2016%20buildings%2036%20pathways.png)
+![alt text](https://github.com/dbowersock18/ENSF-694-Final-Project/blob/79086e79d343be2c33b034f1dd5d3003ceda614e/Campus%20Map%20-%2016%20buildings%2036%20pathways.png)
 
 ### Demo Scenarios and Screenshots
+#### Printing information
+The screenshot below demonstrates the output when the user selects the option to display information regarding the campus. New buildings, rooms, and bookings can be added quite easily, and at volume, using the text files
+![alt text](image.png)
+
+### Shortest Path Query:
+
+### Required features
 
 ### Design Decisions
 
