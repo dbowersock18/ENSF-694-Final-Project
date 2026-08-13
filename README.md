@@ -73,7 +73,7 @@ Finally, the screenbelow demonstrates at least 10 requests being enqueued and de
 - TOOD: Eric to complete
 
 ### Design Decisions
-- TODO: Dylan to discuss dijkstra's algorithm
+- Shortest Path: The algorithm for the shortest path was chosen to be dijkstra's algorithm. This algorithm was chosen, partly because of famaliarity, but also because of efficacy. By utilizing a 'greedy' approach to node selection we can quickly search and compute our shortest distance on the campus. This approach requires a non-negative weight (or distance/time) but given we are calculating lengths amongst a campus pathway, this is a non issue. Dijkstar's algorithm intristically is a tree data structure as it only visits a node once (from a parent mode) and contains no cycles. This was chosen over other data structures, like a breath-first search, because the shortest path algorithm, in this specific situation, required it to be weighted and non-negative.
 
 ### Complexity Analysis
 
