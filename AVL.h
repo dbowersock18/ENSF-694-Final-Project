@@ -50,10 +50,6 @@ private:
     
     void query(Node* node, long time, long endTime);
 
-    
-
-    bool isRoot();
-
     Node* findNextLargest(Node* node);
     //Finds the next largest node from the specified one. Used in the remove function.
     
@@ -102,6 +98,7 @@ public:
     void printCurrent();
     //Prints the currently selected node.
 
+    bool isRoot();
 
     void selectRoot();
 

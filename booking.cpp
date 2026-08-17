@@ -29,10 +29,11 @@ Booking::Booking(int year, int month, int day, int hour, int duration, std::stri
 void Booking::displayInformationBooking(int option){
     // Display all information about booking
     if(option == 0){
+        cout << endl;
         cout << "Booking time: " <<  this -> year << "/" << this -> month << "/" << this -> day
         << " at " << this -> hour << endl;
 
-        cout << "Duration: " << this->duration << "minutes" << endl << "Purpose: " << this->purpose << endl;
+        cout << "Duration: " << this->duration << " minutes" << endl << "Purpose: " << this->purpose << endl;
     }
     if (option == 1){
         cout << "Booking time: " <<  this -> year << "/" << this -> month << "/" << this -> day
