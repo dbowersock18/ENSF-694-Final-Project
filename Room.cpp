@@ -42,6 +42,12 @@ void Room::addBooking(int year, int month, int day, int hour, int duration, stri
     
 }
 
+void Room::removeBooking(int year, int month, int day, int hour, int duration, string purpose){
+    Booking* newBooking = new Booking(year, month, day, hour, duration, purpose);
+    AVL.removeBooking(*newBooking);
+    
+}
+
 void Room::displayInformationAllBookings(){
     if(AVL.getSize() == 0){
         cout << "No bookings are present!";

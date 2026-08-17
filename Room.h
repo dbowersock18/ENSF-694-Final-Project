@@ -20,7 +20,7 @@ public:
     string get_room_id(); // Getter for room_id
     void print_information(); // Prints infrmation related to the room
     void addBooking(int, int, int, int, int, string); // Add a booking to the building
-    void removeBooking(); // Remove a booking from the building
+    void removeBooking(int, int, int, int, int, string); // Remove a booking from the building
     void displayInformationAllBookings();  // display information related to all bookings
     void queryFilterForBookings(); // CLI for interacting with user filtering books
     void printBookingListFiltered(Booking*, Booking*); // filters and prints the bookings within the time window specified by the two inputs. Called by CLI queryFilterForBookings()

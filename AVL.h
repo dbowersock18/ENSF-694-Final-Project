@@ -49,6 +49,15 @@ private:
     void printAll(Node* node);
     
     void query(Node* node, long time, long endTime);
+
+    void selectRoot();
+
+    bool selectFirst();
+
+    bool isRoot();
+
+    Node* findNextLargest(Node* node);
+    //Finds the next largest node from the specified one. Used in the remove function.
     
     //void destroy();
     //Completely destroys the AVL tree
@@ -88,8 +97,6 @@ public:
     Node* remove(Node* node, long time);
     //Deletes the specified node, rotating and fixing the AVL tree as needed.
 
-    Node* findNextLargest(Node* node);
-    //Finds the next largest node from the specified one. Used in the remove function.
 
     void printNext();
     //Shifts the cursor/selection up to the next node, and then prints it out.
@@ -97,11 +104,7 @@ public:
     void printCurrent();
     //Prints the currently selected node.
 
-    void selectRoot();
 
-    bool selectFirst();
-
-    bool isRoot();
     
  
 };

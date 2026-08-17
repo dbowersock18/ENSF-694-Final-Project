@@ -296,6 +296,7 @@ void cliBookingManagement(Campus* campus){
         cout << "   1: View all bookings for a given room" << endl;
         cout << "   2: View bookings for a given room, within a specified window" << endl;
         cout << "   3: Add booking" << endl;
+        cout << "   4: Remove booking" << endl;
         cout << "Please enter a value: ";
         cin >> returnValue;
         if (returnValue == 0) break;
@@ -363,6 +364,38 @@ void cliBookingManagement(Campus* campus){
                             cin >> year >> month >> day >> hour >> duration >> purpose;
                             campus -> campusBuildings[i]->rooms[j].addBooking(year, month, day, hour, duration, purpose);
                             cout << "Booking logged!" << endl;
+                            found = 1;
+                        }
+                    }
+                }
+            }
+            if (!found) cout << "Building + Room could not be found" << endl;
+        }
+        cout << endl;
+
+        //Remove booking
+        if (returnValue == 4){
+            string building, room, purpose;
+            purpose = "Deletion";
+            cout << "Please type the building, followed by the room id. eg) ict ict_204 Press 0 for either input to return: ";
+            cin >> building >> room;
+            cout << endl;
+            bool found = 0;
+            // Loops below print information regarding the booking in each buildings
+            for (int i = 0; i < (int) campus->campusBuildings.size(); i++){
+                if(campus -> campusBuildings[i] -> get_building_id() == building){
+                    for (int j = 0; j < (int) campus -> campusBuildings[i]->rooms.size(); j++){
+                        if(campus -> campusBuildings[i]->rooms[j].get_room_id() == room){
+                            cout << "Room found!" << endl;
+                            int year, month, day, hour, duration;
+                            duration = 0;
+                            cout << "Please enter the following, in this specific format: year day month time" << endl;
+                            cout << "For example August 25th 2026 1:00pm should be entered, exactly: 2026 8 25 1300" << endl
+                            << "noting that the time is in 24 hour format (7:30am becomes 0730) and no leading whitespace (8th of August not 08)" << endl;
+                            cout << "Please enter: ";
+                            cin >> year >> month >> day >> hour;
+                            campus -> campusBuildings[i]->rooms[j].removeBooking(year, month, day, hour, duration, purpose);
+                            cout << "Booking deleted!" << endl;
                             found = 1;
                         }
                     }
