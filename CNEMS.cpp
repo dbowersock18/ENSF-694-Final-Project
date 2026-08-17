@@ -355,8 +355,7 @@ void cliBookingManagement(Campus* campus){
                     for (int j = 0; j < (int) campus -> campusBuildings[i]->rooms.size(); j++){
                         if(campus -> campusBuildings[i]->rooms[j].get_room_id() == room){
                             cout << "Room found!" << endl;
-                            int year, month, day;
-                            double hour, duration;
+                            int year, month, day, hour, duration;
                             cout << "Please enter the following, in this specific format: year day month time duration (min) purpose" << endl;
                             cout << "For example August 11th 2026 7:30am for a class 2 hours should be entered, exactly: 2026 8 11 0730 120 Class" << endl
                             << "noting that the time is in 24 hour format (7:30am becomes 0730) and no leading whitespace (8th of August not 08)" << endl;
