@@ -330,7 +330,6 @@ Node* AVLTree::remove(Node* node, long time){
         //If the booking to be deleted has no children, we can simply delete it.
         if (node->left == nullptr && node->right == nullptr){
             delete node;
-            node = nullptr;
         }
         //If there is a child on the left and not on the right, 
         else if (node->left != nullptr && node->right == nullptr){
