@@ -295,7 +295,7 @@ void AVLTree::removeBooking(Booking booking){
 
     selectRoot();
     if(root != nullptr)
-        remove(root, searchKey);
+        root = remove(root, searchKey);
     else
         std::cout << "Cannot delete: there are no bookings at all. Why not create one?" << std::endl;   
 
@@ -330,6 +330,7 @@ Node* AVLTree::remove(Node* node, long time){
         //If the booking to be deleted has no children, we can simply delete it.
         if (node->left == nullptr && node->right == nullptr){
             delete node;
+            return nullptr;
         }
         //If there is a child on the left and not on the right, 
         else if (node->left != nullptr && node->right == nullptr){
@@ -357,7 +358,7 @@ Node* AVLTree::remove(Node* node, long time){
             node->data = temp->data;
             node->booking = temp->booking;
             //Delete the node whose data we just replaced
-            node->right = remove(root->right, temp->data.time);
+            node->right = remove(node->right, temp->data.time);
             
         }
     }
