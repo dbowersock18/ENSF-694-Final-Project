@@ -82,8 +82,14 @@ public:
     void query(long time, long endTime);
     //Interface for searching for all bookings starting between two given times. Can also be used for finding all bookings on a given day.
 
-    void remove(Node* N);
+    void removeBooking(Booking booking);
+    //Interface for removing a booking. Finds the node for the booking then calls remove.
+
+    Node* remove(Node* node, long time);
     //Deletes the specified node, rotating and fixing the AVL tree as needed.
+
+    Node* findNextLargest(Node* node);
+    //Finds the next largest node from the specified one. Used in the remove function.
 
     void printNext();
     //Shifts the cursor/selection up to the next node, and then prints it out.

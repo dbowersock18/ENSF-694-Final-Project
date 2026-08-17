@@ -4,7 +4,7 @@
 // TODO: Function to delete a reservation
 // TODO: Display bookings between two time stamps
 
-AVLTree::AVLTree() : root(nullptr) /*cursor(nullptr)*/ {}
+AVLTree::AVLTree() : root(nullptr), cursor(nullptr) {}
 
 int AVLTree::height(const Node* N) {
 	//If N is not a nullptr, returns height. Otherwise, returns 0.
@@ -290,3 +290,110 @@ bool AVLTree::isRoot(){
     return 0;
 }
 
+void AVLTree::removeBooking(Booking booking){
+    long searchKey = booking.convertTime();
+
+    selectRoot();
+    if(root != nullptr)
+        remove(root, searchKey);
+    else
+        std::cout << "Cannot delete: there are no bookings at all. Why not create one?" << std::endl;   
+
+}
+
+Node* AVLTree::findNextLargest(Node* node){
+    //Assigning a new node so we don't affect the original node during this search
+    Node* search = node;
+
+    //Continue finding the smallest until we reach the bottom of the left subtree
+    while (search->left != nullptr){
+        search = search->left;
+    }
+
+    return search;
+}
+
+
+Node* AVLTree::remove(Node* node, long time){
+    //Search for the node to remove.
+    if (node == nullptr){
+        std::cout << "Booking not found!";
+        return node;
+    }
+    if (time < node->data.time){
+        node->left = remove(node->left, time);
+    }
+    else if (time > node->data.time){
+        node->right = remove(node->right, time);
+    }
+    else {
+        //If the booking to be deleted has no children, we can simply delete it.
+        if (node->left == nullptr && node->right == nullptr){
+            delete node;
+            node = nullptr;
+        }
+        //If there is a child on the left and not on the right, 
+        else if (node->left != nullptr && node->right == nullptr){
+            //Assign a new node to hold the one being deleted.
+            Node* temp = node;
+            //Replace the deleted node with its child.
+            node = node->left;
+            //Fix the node's parent.
+            node->parent = temp->parent;
+            //Delete the temp node (the one to be deleted)
+            delete temp;
+        }
+        //If there is a child on the right and not on the left,
+        else if (node->left == nullptr && node->right !=nullptr){
+            Node* temp = node;
+            node = node->right;
+            node->parent = temp->parent;
+            delete temp;
+        }
+        //If the node has two children,
+        else if (node->left != nullptr && node->right !=nullptr){
+            //Find the next-largest node from the one we're deleting
+            Node* temp = findNextLargest(node->right);
+            //Set the node-to-be-deleted's data as the next largest node (essentially replacing everything but the node's parent and child links)
+            node->data = temp->data;
+            node->booking = temp->booking;
+            //Delete the node whose data we just replaced
+            node->right = remove(root->right, temp->data.time);
+            
+        }
+    }
+    
+    //Recalculate heights for the affected nodes (from here on out, it's a similar procedure to adding a node)
+    node->height = (1 + std::max(height(node->left), height(node->right)));
+
+    //Check balance
+	int balance = getBalance(node);
+
+	//If the balance is greater than +- 1, rotate appropriately.
+	//Note: getBalance() returns height(right) - height(left), so a
+	//positive balance means right-heavy (needs a left rotation) and a
+	//negative balance means left-heavy (needs a right rotation).
+
+	if (balance < -1 && getBalance(node->left) <= 0) {
+		return rightRotate(node);
+	}
+
+	else if (balance < -1 && getBalance(node->left) > 0) {
+        node->left = leftRotate(node->left);
+        return rightRotate(node);
+    }
+
+    else if (balance > 1 && getBalance(node->right) >= 0) {
+        return leftRotate(node);
+	}
+
+    else if (balance > 1 && getBalance(node->right) < 0) {
+        node->right = rightRotate(node->right);
+        return leftRotate(node);
+    }
+
+	//If the balance is okay, just return the node as is.
+    else {
+		return node;
+	}
+}
