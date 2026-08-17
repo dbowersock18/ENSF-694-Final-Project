@@ -1,2 +1,6 @@
-ict ict_204 2026 8 11 700 120 Class
-ict ict_204 2026 8 12 830 60 Event
+ict ict_204 2026 8 11 700 110 Class
+ict ict_204 2026 8 11 900 50 Class
+ict ict_204 2026 8 11 1000 50 Class
+ict ict_204 2026 8 11 1100 50 Class
+ict ict_204 2026 8 11 1300 110 Class
+ict ict_204 2026 8 12 830 50 Event
