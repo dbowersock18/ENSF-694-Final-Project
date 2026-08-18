@@ -30,9 +30,13 @@ Node* AVLTree::rightRotate(Node* y) {
     //Right - rotates the specified node and returns the new root.
 	Node *x = y->left;
 	Node *z = x->right;
-	
+
 	x->right = y;
 	y->left = z;
+
+    if (z != nullptr){
+        z->parent = x;
+    }
 	
 	//Update height
 	y->height = (1 + std::max(height(y->left), height(y->right)));
@@ -53,6 +57,10 @@ Node* AVLTree::rightRotate(Node* y) {
 	
 	y->left = x;
 	x->right = z;
+
+    if (z != nullptr){
+        z->parent = x;
+    }
 	 
 	//Update height
 	y->height = (1 + std::max(height(y->left), height(y->right)));
