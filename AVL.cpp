@@ -89,13 +89,6 @@ void AVLTree::insert(long time, long endTime, Booking booking) {
             std::cout << endl;
             return node;
         }
-        if (time < node->data.endTime){
-            std::cout << "Time conflict: new event starts before an existing event ends." << std::endl;
-            std::cout << "Conflicting event: "  << std::endl;
-            node->booking.displayInformationBooking(0);
-            std::cout << endl;
-            return node;
-        }
         node->left = insert(node->left, time, endTime, booking, node);
     }
 	
