@@ -105,6 +105,7 @@ void AVLTree::insert(long time, long endTime, Booking booking) {
             std::cout << "Time conflict: new event starts before an existing event ends." << std::endl;
             std::cout << "Conflicting event: " << std::endl;
             node->booking.displayInformationBooking(0);
+            std::cout << endl;
             return node;
         }
         node->right = insert(node->right, time, endTime, booking, node); 
@@ -112,7 +113,10 @@ void AVLTree::insert(long time, long endTime, Booking booking) {
 	
 	//If the start time equals the current node's start time, return the existing node (no booking two events on the same start time)
     else if (time == node->data.time){
-		return node;
+        std::cout << "Time conflict: booking already exists at this time!" << std::endl;
+        node->booking.displayInformationBooking(0);
+        std::cout << endl;
+        return node;
 	}
 	 
 	//After the recursion, we will have a new node in the tree. Then check for balance,
