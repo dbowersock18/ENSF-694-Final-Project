@@ -132,20 +132,20 @@ void AVLTree::insert(long time, long endTime, Booking booking) {
 	//positive balance means right-heavy (needs a left rotation) and a
 	//negative balance means left-heavy (needs a right rotation).
 
-	if (balance < -1 && time < node->left->data.time) {
+	if (balance < -1 && node->left != nullptr && time < node->left->data.time) {
 		return rightRotate(node);
 	}
 
-	else if (balance < -1 && time > node->left->data.time) {
+	else if (balance < -1 && node->left != nullptr && time > node->left->data.time) {
         node->left = leftRotate(node->left);
         return rightRotate(node);
     }
 
-    else if (balance > 1 && time > node->right->data.time) {
+    else if (balance > 1 && node->right != nullptr && time > node->right->data.time) {
         return leftRotate(node);
 	}
 
-    else if (balance > 1 && time < node->right->data.time) {
+    else if (balance > 1 && node->right != nullptr && time < node->right->data.time) {
         node->right = rightRotate(node->right);
         return leftRotate(node);
     }
