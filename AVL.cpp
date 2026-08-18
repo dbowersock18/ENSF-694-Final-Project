@@ -35,7 +35,7 @@ Node* AVLTree::rightRotate(Node* y) {
 	y->left = z;
 
     if (z != nullptr){
-        z->parent = x;
+        z->parent = y;
     }
 	
 	//Update height
@@ -63,8 +63,8 @@ Node* AVLTree::rightRotate(Node* y) {
     }
 	 
 	//Update height
-	y->height = (1 + std::max(height(y->left), height(y->right)));
 	x->height = (1 + std::max(height(x->left), height(x->right)));
+    y->height = (1 + std::max(height(y->left), height(y->right)));
 
     //Update parents
 	y->parent = x->parent;
