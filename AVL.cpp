@@ -132,12 +132,14 @@ void AVLTree::insert(long time, long endTime, Booking booking) {
 	//positive balance means right-heavy (needs a left rotation) and a
 	//negative balance means left-heavy (needs a right rotation).
 
+
+    //Rotations now contain checks for adversarial insertion (IE adding 80 events in a row chronologically, creating a very unbalanced tree)
 	if (balance < -1 && node->left != nullptr && time < node->left->data.time) {
 		return rightRotate(node);
 	}
 
 	else if (balance < -1 && node->left != nullptr && time > node->left->data.time) {
-        node->left = leftRotate(node->left);
+        if (node->left->right != nullptr) node->left = leftRotate(node->left);
         return rightRotate(node);
     }
 
@@ -146,7 +148,7 @@ void AVLTree::insert(long time, long endTime, Booking booking) {
 	}
 
     else if (balance > 1 && node->right != nullptr && time < node->right->data.time) {
-        node->right = rightRotate(node->right);
+        if (node->right->left != nullptr) node->right = rightRotate(node->right);
         return leftRotate(node);
     }
 
