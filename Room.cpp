@@ -38,7 +38,7 @@ string Room::get_room_id(){
 //Adds a new booking for the room. Will print an error message and fail to add the booking if there is a time conflict.
 void Room::addBooking(int year, int month, int day, int hour, int duration, string purpose){
     Booking* newBooking = new Booking(year, month, day, hour, duration, purpose);
-    AVL.insert(newBooking->convertTime(), newBooking->convertTime() + duration, *newBooking);
+    AVL.insert(newBooking->convertTime(), newBooking->convertTime() + long(duration), *newBooking);
     
 }
 
@@ -103,8 +103,6 @@ void Room::queryFilterForBookings(){
     }
 }
 
-//This whole thing has to be finished, and the AVL tree needs a new function for it too. WIP, commenting it out so it doesn't cause compiler errors.
-// TODO: CONVERT THE BOOL STATEMENTS TO A USABLE INTEGER
 
 void Room::printBookingListFiltered(Booking* start, Booking* end){
     cout << "The following bookings fall within the specified window:" << endl;
@@ -113,29 +111,6 @@ void Room::printBookingListFiltered(Booking* start, Booking* end){
     long endTime   = end->convertTime();
 
     AVL.query(startTime, endTime);
-    // cycle through the bookings and print those that fall within the time window
-    /*cout << "The following bookings fall within that timeszone specified: " << endl;
-    bool found = 0;
-    int startTime = start->year * 365 * 24 * 60 + start->month * 30.4 * 24 * 60 + start->day * 24 * 60 + start->hour * 60;
-    int endTime = end->year * 365 * 24 * 60 + end->month * 30.4 * 24 * 60 + end->day * 24 * 60 + end->hour * 60;
-    for (int i = 0; i < (int) this->bookings.size(); i++){
-        // if ((bookings[i].year >= start->year && bookings[i].year <= end->year) &&
-        //     (bookings[i].month >= start->month && bookings[i].month <= end->month) &&
-        //     (bookings[i].day >= start->day && bookings[i].day <= end->day) &&
-        //     ((bookings[i].hour + bookings[i].duration) >= start->hour && (bookings[i].hour) < end->hour)
-        //     ) 
-        //     {
-        //     bookings[i].displayInformationBooking(0);
-        //     found = 1;
-        // }
-        int time = (this->bookings[i].year) * 365 * 24 * 60 + this->bookings[i].month * 30.4 * 24 * 60 + this->bookings[i].day * 24 * 60 + this->bookings[i].hour * 60 + this->bookings[i].duration;
-        if (time >= startTime && time <= endTime){
-           bookings[i].displayInformationBooking(0);
-            found = 1; 
-        }
-    }
-    if (!found) cout << "Sorry ... no bookings were found in that specified window!" << endl;
-    */
 }
 
 
