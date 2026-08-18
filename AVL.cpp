@@ -84,12 +84,14 @@ void AVLTree::insert(long time, long endTime, Booking booking) {
         //For each time it moves left, it will check if the new event starts or ends during the existing event, and end the recursion with a message if it does.
         if (endTime > node->data.time) {
             std::cout << "Time conflict: new event ends after an existing event starts." << std::endl;
-            std::cout << "Conflicting event: " << node->booking.getPurpose() << " at " << node->data.time << " to " << node->data.endTime << std::endl;
+            std::cout << "Conflicting event: " << std::endl;
+            node->booking.displayInformationBooking(0);
             return node;
         }
         if (time < node->data.endTime){
             std::cout << "Time conflict: new event starts before an existing event ends." << std::endl;
-            std::cout << "Conflicting event: " << node->booking.getPurpose() << " at " << node->data.time << " to " << node->data.endTime << std::endl;
+            std::cout << "Conflicting event: "  << std::endl;
+            node->booking.displayInformationBooking(0);
             return node;
         }
         node->left = insert(node->left, time, endTime, booking, node);
@@ -99,8 +101,8 @@ void AVLTree::insert(long time, long endTime, Booking booking) {
     else if (time > node->data.time) {
         if (time < node->data.endTime){
             std::cout << "Time conflict: new event starts before an existing event ends." << std::endl;
-            std::cout << "Conflicting event: " << node->booking.getPurpose() << " at " << node->data.time << " to " << node->data.endTime << std::endl;
-            //TODO; convert that time (internal function time, a single long) to human readable time. Perhaps create a function in booking.h/cpp?
+            std::cout << "Conflicting event: " << std::endl;
+            node->booking.displayInformationBooking(0);
             return node;
         }
         node->right = insert(node->right, time, endTime, booking, node); 

@@ -24,7 +24,7 @@ Booking::Booking(int year, int month, int day, int hour, int duration, std::stri
     this -> duration = duration;
     this -> purpose = purpose;
 }
-
+    
 
 void Booking::displayInformationBooking(int option){
     // Display all information about booking
