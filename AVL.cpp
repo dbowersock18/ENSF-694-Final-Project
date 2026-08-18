@@ -139,7 +139,7 @@ void AVLTree::insert(long time, long endTime, Booking booking) {
 	}
 
 	else if (balance < -1 && node->left != nullptr && time > node->left->data.time) {
-        if (node->left->right != nullptr) node->left = leftRotate(node->left);
+        node->left = leftRotate(node->left);
         return rightRotate(node);
     }
 
@@ -148,7 +148,7 @@ void AVLTree::insert(long time, long endTime, Booking booking) {
 	}
 
     else if (balance > 1 && node->right != nullptr && time < node->right->data.time) {
-        if (node->right->left != nullptr) node->right = rightRotate(node->right);
+        node->right = rightRotate(node->right);
         return leftRotate(node);
     }
 
