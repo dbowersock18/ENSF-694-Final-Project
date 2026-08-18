@@ -24,7 +24,7 @@ Booking::Booking(int year, int month, int day, int hour, int duration, std::stri
     this -> duration = duration;
     this -> purpose = purpose;
 }
-    
+
 
 void Booking::displayInformationBooking(int option){
     // Display all information about booking
@@ -47,12 +47,12 @@ string Booking::getPurpose(){
 
 long Booking::convertTime(){        //Converts the given time into total minutes since the year 2000
     long result = 0;
-    result += (year - 2000) * 365 * 24 * 60;            //Minutes per year
-    result += month * 365 * 24 * 60 /12;                //Minutes per month (on average)
-    result += day * 24 * 60;                            //Minutes per day
-    int hourWhole = hour / 100;                         //Minutes per hours (taking 24 hour time and stripping the minutes: IE 1730 becomes 1700)
-    result += hourWhole * 60;
-    int hourMinutes = hour % 100;                       //Minutes (taking 24 hour time and taking just the minutes, IE 1730 becomes 30)
+    result += long(year - 2000) * 525600L;              //Minutes per year
+    result += long(month - 1) * 43800L;                 //Minutes per month (on average)
+    result += long(day - 1) * 1440L;                    //Minutes per day
+    long hourWhole = hour / 100;                         //Minutes per hours (taking 24 hour time and stripping the minutes: IE 1730 becomes 1700)
+    result += hourWhole * 60L;
+    long hourMinutes = hour % 100L;                       //Minutes (taking 24 hour time and taking just the minutes, IE 1730 becomes 30)
     result += hourMinutes;
 
     return result;
